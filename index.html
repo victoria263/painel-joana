@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADERE.AI · Painel da Joana</title>
+<style>
+  :root{
+    --bg:#F5F3EF; --card:#FFFFFF; --ink:#1f2a28; --mut:#7c8a86; --line:#e7e3dc;
+    --green:#2f8f6f; --green2:#3aa77f; --wa:#25D366; --wa-out:#d9fdd3;
+    --gold:#C9962E; --gray:#b9c0bd; --danger:#d9694f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.45}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{background:linear-gradient(120deg,#2f8f6f,#3aa77f);color:#fff;padding:16px 0}
+  .hd{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:20px;letter-spacing:.02em}
+  .logo small{display:block;font-weight:500;font-size:12px;opacity:.85;letter-spacing:.06em;text-transform:uppercase}
+  .count{background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600}
+  .search{margin-left:auto;flex:1;min-width:180px;max-width:320px}
+  .search input{width:100%;border:none;border-radius:10px;padding:9px 14px;font-size:14px;outline:none}
+  .lgpd{font-size:11.5px;opacity:.9;margin-top:8px;display:flex;align-items:center;gap:6px}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;opacity:.9}
+  .dot-live{width:8px;height:8px;border-radius:50%;background:#c6ffdd;box-shadow:0 0 0 0 rgba(198,255,221,.7);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(198,255,221,.6)}70%{box-shadow:0 0 0 8px rgba(198,255,221,0)}100%{box-shadow:0 0 0 0 rgba(198,255,221,0)}}
+
+  /* home grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:26px 0}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;transition:.18s;display:flex;gap:14px;align-items:center}
+  .pcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(40,60,55,.10);border-color:#cfe6dd}
+  .av{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px}
+  .pcard .nm{font-weight:700;font-size:16px}
+  .pcard .sub{font-size:12px;color:var(--mut);margin-top:3px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:7px;text-transform:uppercase;letter-spacing:.04em}
+  .b-ativa{background:#e4f6ee;color:#1f7d5c}
+  .b-inativa{background:#eceeed;color:#8b938f}
+
+  /* detail */
+  .back{display:inline-flex;align-items:center;gap:7px;margin:22px 0 6px;color:var(--green);font-weight:600;cursor:pointer}
+  .detail{display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,420px);gap:22px;padding-bottom:60px;align-items:start}
+  @media(max-width:820px){.detail{grid-template-columns:1fr}}
+
+  /* whatsapp mockup */
+  .phone{background:#0b141a;border-radius:22px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,.18)}
+  .wa{background:#efeae2;border-radius:14px;overflow:hidden;height:640px;display:flex;flex-direction:column}
+  .wa-hd{background:#075E54;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .wa-hd .av{width:40px;height:40px;font-size:15px}
+  .wa-hd .nm{font-weight:600;font-size:15px}
+  .wa-hd .st{font-size:11.5px;opacity:.85}
+  .wa-body{flex:1;overflow-y:auto;padding:16px 12px;background-image:linear-gradient(rgba(229,221,212,.6),rgba(229,221,212,.6));background-color:#e5ddd4}
+  .msg{max-width:78%;padding:7px 10px;border-radius:9px;margin-bottom:8px;font-size:13.5px;position:relative;box-shadow:0 1px 1px rgba(0,0,0,.06);white-space:pre-wrap;word-wrap:break-word}
+  .m-joana{background:var(--wa-out);margin-left:auto;border-top-right-radius:2px}
+  .m-pac{background:#fff;margin-right:auto;border-top-left-radius:2px}
+  .m-time{display:block;font-size:10px;color:#667;text-align:right;margin-top:3px}
+  .wa-empty{color:#8a948f;text-align:center;margin-top:40px;font-size:13px}
+
+  /* milestones */
+  .panel{display:flex;flex-direction:column;gap:14px}
+  .pnhead{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .pnhead .nm{font-weight:800;font-size:19px}
+  .cycles{display:flex;gap:8px;flex-wrap:wrap}
+  .cyc{font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;border:1.5px solid var(--line);color:var(--mut)}
+  .cyc.done{background:#e4f6ee;color:#1f7d5c;border-color:#bfe6d5}
+  .cyc.cur{background:#fff6e2;color:#a9781a;border-color:#e6d6a8}
+  .mcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .mcard .lb{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:7px}
+  .mcard .vl{font-size:14.5px;margin-top:5px}
+  .meds{margin:6px 0 0;padding-left:18px}
+  .meds li{font-size:13.5px;margin-bottom:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:16px;margin-left:6px}
+  .p-ok{background:#e4f6ee;color:#1f7d5c}
+  .p-wait{background:#fbf1d8;color:#a9781a}
+  .p-late{background:#fbe4de;color:#c0432b}
+  .p-tbd{background:#eceeed;color:#8b938f}
+  .meta{background:linear-gradient(120deg,#fffaf0,#fff);border:1.5px solid #eedcae}
+  .meta .big{font-size:22px;font-weight:800;color:var(--gold);margin-top:4px}
+  .tbd{color:#a58a4d;font-style:italic}
+
+  /* login */
+  .gate{position:fixed;inset:0;background:linear-gradient(120deg,#2f8f6f,#3aa77f);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px}
+  .gbox{background:#fff;border-radius:18px;padding:34px 30px;max-width:340px;width:100%;text-align:center}
+  .gbox h2{font-size:20px}
+  .gbox p{color:var(--mut);font-size:13px;margin:8px 0 18px}
+  .gbox input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:15px;text-align:center;letter-spacing:.1em}
+  .gbox button{width:100%;margin-top:12px;padding:12px;border:none;border-radius:10px;background:var(--green);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+  .gbox .err{color:var(--danger);font-size:12px;margin-top:10px;min-height:16px}
+  .foot{color:var(--mut);font-size:11.5px;text-align:center;padding:20px 0 40px}
+</style>
+</head>
+<body>
+<div id="gate" class="gate">
+  <div class="gbox">
+    <div style="font-size:34px">🩺</div>
+    <h2>Painel da Joana</h2>
+    <p>ADERE.AI · acesso restrito (Dra. Isabelle e Victoria). Dados clínicos confidenciais — LGPD.</p>
+    <input id="pw" type="password" placeholder="senha de acesso" autocomplete="off">
+    <button onclick="tryLogin()">Entrar</button>
+    <div class="err" id="gerr"></div>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <header>
+    <div class="wrap">
+      <div class="hd">
+        <div class="logo">ADERE.AI <small>Painel da Joana</small></div>
+        <div class="count" id="count">–</div>
+        <div class="search"><input id="search" placeholder="buscar paciente..." oninput="render()"></div>
+      </div>
+      <div class="lgpd">
+        <span class="live"><span class="dot-live"></span> <span id="livelbl">ao vivo</span></span>
+        &nbsp;·&nbsp; Dados clínicos confidenciais — uso restrito (LGPD). Não compartilhar.
+      </div>
+    </div>
+  </header>
+  <div class="wrap" id="view"></div>
+  <div class="foot">ADERE.AI · Painel da Joana · atualiza sozinho a cada 15s</div>
+</div>
+
+<script>
+const PALETTE=["#2f8f6f","#3f7cae","#b06a9b","#c98a3a","#5a8f4f","#a15c5c"];
+const API_BASE="";  // vazio = mesma origem. Pra apontar pra API ao vivo, cole aqui a URL do tunel.
+const SAMPLE_DATA={
+  "total": 4,
+  "ativas": 3,
+  "pacientes": [
+    {
+      "telefone": "5511983929279",
+      "nome": "Renata Lovetro",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T13:13:10.580707+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Olá paciente Renata Lovetro Dra Isabelle",
+          "ts": "2026-06-03T22:31:59.523353+00:00",
+          "hora": "03/06 22:31"
+        },
+        {
+          "de": "joana",
+          "texto": "Renata está chegando pela primeira vez — envio o termo conforme o template.\n\nOi Renata, aqui é a Joana, assistente da Dra. Isabelle.\n\nPra te acompanhar, preciso da sua autorização pra trocar mensagem com você entre as consultas — lembretes, dúvidas, suporte do dia a dia.\n\nVeja o termo completo aqui: https://docs.goo...",
+          "ts": "2026-06-03T22:32:40.602041+00:00",
+          "hora": "03/06 22:32"
+        },
+        {
+          "de": "paciente",
+          "texto": "A",
+          "ts": "2026-06-03T22:33:34.444321+00:00",
+          "hora": "03/06 22:33"
+        },
+        {
+          "de": "joana",
+          "texto": "Ótimo, Renata! Aceitação registrada. 🩺\n\nSou a Joana, assistente da Dra. Isabelle. Estou aqui pra te acompanhar entre as consultas — lembretes de medicação, dúvidas do dia a dia, suporte quando precisar. Não sou médica e não substituo a Isabelle, mas sou a ponte entre você e ela.\n\nSempre que tiver uma dúvida ou preci...",
+          "ts": "2026-06-03T22:33:44.762765+00:00",
+          "hora": "03/06 22:33"
+        },
+        {
+          "de": "paciente",
+          "texto": "Olá boa tarde!\nTd bem\nE vc?",
+          "ts": "2026-06-10T18:04:41.605277+00:00",
+          "hora": "10/06 18:04"
+        },
+        {
+          "de": "joana",
+          "texto": "Boa tarde, Renata! Tudo bem por aqui, obrigada por perguntar.\n\nFico feliz que você tenha entrado em contato. Como você está se sentindo? Alguma dúvida ou coisa que queira conversar desde a última consulta com a Dra. Isabelle?",
+          "ts": "2026-06-10T18:04:54.550412+00:00",
+          "hora": "10/06 18:04"
+        },
+        {
+          "de": "paciente",
+          "texto": "Referente as medicações nenhuma dúvida, estou seguindo certinho.\nReferente as sintomas até agora não notei nenhuma modificação continua com fogachos, insônia devido aos despertares,",
+          "ts": "2026-06-10T18:08:40.789156+00:00",
+          "hora": "10/06 18:08"
+        },
+        {
+          "de": "joana",
+          "texto": "Que bom saber que está seguindo a medicação certinho, Renata — isso faz muita diferença no tratamento.\n\nSobre os fogachos e os despertares noturnos continuarem, vou passar essa informação pra Dra. Isabelle. Ela precisa saber que os sintomas ainda estão presentes desde a última consulta, para avaliar como está sendo ...",
+          "ts": "2026-06-10T18:08:56.562489+00:00",
+          "hora": "10/06 18:08"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok obrigada 🙏",
+          "ts": "2026-07-09T13:31:40.506330+00:00",
+          "hora": "09/07 13:31"
+        },
+        {
+          "de": "joana",
+          "texto": "Imagina, Renata! Como voce esta se sentindo nesses primeiros dias com o adesivo? Se notar qualquer coisa na pele, alguma vermelhidao ou incomodo, ou tiver duvida, e so me contar. Estou aqui com voce.",
+          "ts": "2026-07-09T13:32:08.103390+00:00",
+          "hora": "09/07 13:32"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok adesivo foi tranquilo sem vermelhidão ou  incômodo 🙏\nFogachos continuam e irritação também, qualidade de sono muito boa",
+          "ts": "2026-07-09T14:18:48.161443+00:00",
+          "hora": "09/07 14:18"
+        },
+        {
+          "de": "joana",
+          "texto": "Que bom, Renata, fico muito feliz que o adesivo foi tranquilo, sem vermelhidao nem incomodo, e que o seu sono melhorou tanto. Isso e um otimo sinal.\n\nSobre os fogachos e a irritacao que continuam, obrigada por me contar certinho. Vou passar isso pra Dra. Isabelle, pra ela ter esse quadro no seu acompanhamento. Voce ...",
+          "ts": "2026-07-09T14:19:28.200328+00:00",
+          "hora": "09/07 14:19"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok",
+          "ts": "2026-07-13T13:09:29.545907+00:00",
+          "hora": "13/07 13:09"
+        },
+        {
+          "de": "paciente",
+          "texto": "Já coloquei obrigada",
+          "ts": "2026-07-13T13:13:10.580707+00:00",
+          "hora": "13/07 13:13"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": true,
+          "data": "2026-06-03"
+        },
+        "diagnostico": "Climatério com sintomas vasomotores (fogachos) e insônia",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "a confirmar com a Dra. Isabelle (ciclo 2)"
+        ],
+        "ultimaConsulta": "a confirmar (consulta de retorno realizada)",
+        "proximaConsulta": "a confirmar (retorno em 30 dias)",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH inicial (início 01/06/2026)",
+          "meta": {
+            "descricao": "Consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "alcancada"
+          },
+          "atual": false
+        },
+        {
+          "numero": 2,
+          "tratamento": "Novo tratamento pós-retorno (a confirmar com a Dra. Isabelle)",
+          "meta": {
+            "descricao": "Nova consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511999100016",
+      "nome": "Anna Paola",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T13:40:06.908042+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Oi",
+          "ts": "2026-07-01T18:05:19.952861+00:00",
+          "hora": "01/07 18:05"
+        },
+        {
+          "de": "joana",
+          "texto": "Oi Anna Paola, que bom te ver por aqui! Fico feliz que voce apareceu.\n\nAntes da gente comecar, preciso so do seu aceite do termo de consentimento, que explica como eu cuido dos seus dados. Eu te mandei ele aqui em cima, naquele botao 'Ler o termo'. Depois de ler, e so me responder com a palavra aceito que eu ja sigo...",
+          "ts": "2026-07-01T18:05:51.574987+00:00",
+          "hora": "01/07 18:05"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_fup_checkin) reaquecimento — sem resposta desde 01/07, termo pendente",
+          "ts": "2026-07-13T13:40:06.908042+00:00",
+          "hora": "13/07 13:40"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": "a confirmar",
+          "data": null
+        },
+        "diagnostico": "Pós-menopausa (50 anos)",
+        "tratamento": "Implante hormonal",
+        "medicamentos": [
+          "Implante hormonal (inserido em 23/06/2026)"
+        ],
+        "ultimaConsulta": "2026-06-23 (inserção do implante)",
+        "proximaConsulta": "a confirmar",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "Implante hormonal (inserido 23/06/2026)",
+          "meta": {
+            "descricao": "Consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511976919161",
+      "nome": "Patrícia Guimarães",
+      "foto": null,
+      "ativa": false,
+      "ultimaInteracao": "2026-07-13T13:40:07.577514+00:00",
+      "mensagens": [
+        {
+          "de": "joana",
+          "texto": "(template joana_termo_consentimento) envio inicial do termo de consentimento",
+          "ts": "2026-07-13T13:40:07.577514+00:00",
+          "hora": "13/07 13:40"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": false,
+          "data": null
+        },
+        "diagnostico": "TRH (contexto clínico a confirmar)",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "Estradiol transdérmico (1 pump de manhã)",
+          "Progesterona oral (à noite)",
+          "Testosterona gel (de manhã, libido)"
+        ],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno para ajuste de dose (a confirmar)",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH (estradiol transdérmico + progesterona + testosterona gel)",
+          "meta": {
+            "descricao": "Retorno para ajuste de dose",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511974421122",
+      "nome": "Thaís Thomazzoni",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T14:15:03.610907+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Olá! Tudo bem? 😊 Provavelmente estou agora registrando uma nova história de\nfamília.\n\nAssim que eu finalizar por aqui, já te retorno pessoalmente para conversarmos. 📸\n\n*Se for urgente ou emergência por favor ligue‼️*",
+          "ts": "2026-06-26T11:53:00.558940+00:00",
+          "hora": "26/06 11:53"
+        },
+        {
+          "de": "joana",
+          "texto": "Oi Thais, tudo bem? Que trabalho lindo, registrar uma nova historia de familia. Pode ficar tranquila e seguir ai, sem pressa nenhuma.\n\nQuando voce terminar e tiver um tempinho, me avisa que eu te explico rapidinho como vai funcionar o nosso acompanhamento e seguimos daqui. Fico no aguardo.",
+          "ts": "2026-06-26T11:54:20.740333+00:00",
+          "hora": "26/06 11:54"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_fup_checkin) reaquecimento — sem resposta desde 26/06",
+          "ts": "2026-07-13T13:40:06.409229+00:00",
+          "hora": "13/07 13:40"
+        },
+        {
+          "de": "paciente",
+          "texto": "Bom dia! Tudo bem? Tudo certo estou usando a medicação de forma correta e sem esquecimento 🙌🏻\nSó preciso fazer os exames agora",
+          "ts": "2026-07-13T13:40:56.216231+00:00",
+          "hora": "13/07 13:40"
+        },
+        {
+          "de": "joana",
+          "texto": "Bom dia, Thais! Que alegria te ver por aqui, e melhor ainda saber que voce esta seguindo a medicacao certinho, sem esquecer. Isso faz toda a diferenca no tratamento, parabens pelo cuidado.\n\nSobre os exames, posso te ajudar a organizar. Voce ja esta com o pedido da Dra. Isabelle em maos, aquele com a lista dos exames...",
+          "ts": "2026-07-13T13:43:24.421920+00:00",
+          "hora": "13/07 13:43"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_termo_consentimento) envio do termo p/ formalizar aceite LGPD",
+          "ts": "2026-07-13T13:46:05.932645+00:00",
+          "hora": "13/07 13:46"
+        },
+        {
+          "de": "joana",
+          "texto": "So uma formalidade rapidinha antes de a gente seguir com os exames, Thais: te mandei ali em cima o termo de consentimento, que explica como eu cuido dos seus dados aqui. E so tocar em Ler o termo e me responder com a palavra aceito. Assim que voce fizer isso, a gente continua certinho com a organizacao dos seus exames.",
+          "ts": "2026-07-13T13:46:27.548527+00:00",
+          "hora": "13/07 13:46"
+        },
+        {
+          "de": "paciente",
+          "texto": "Aceito",
+          "ts": "2026-07-13T13:48:09.408178+00:00",
+          "hora": "13/07 13:48"
+        },
+        {
+          "de": "joana",
+          "texto": "Recebido, Thais, obrigada. Seja muito bem-vinda ao acompanhamento. A partir de agora eu fico por aqui com voce no dia a dia, pra qualquer duvida sobre a medicacao, os exames, a agenda ou o que voce precisar com a Dra. Isabelle.\n\nVoltando aos seus exames: voce ja esta com o pedido da Dra. Isabelle em maos, aquele com...",
+          "ts": "2026-07-13T13:48:25.199816+00:00",
+          "hora": "13/07 13:48"
+        },
+        {
+          "de": "paciente",
+          "texto": "Eu já agendei todos os exames para uma data única porém só consegui para o dia 11/08",
+          "ts": "2026-07-13T14:15:03.610907+00:00",
+          "hora": "13/07 14:15"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": "a confirmar",
+          "data": null
+        },
+        "diagnostico": "TRH há 3 anos",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "Lenzzeto (2 sprays de estradiol de manhã, cada spray numa parte do antebraço)",
+          "Progesterona (1 comprimido à noite)",
+          "Testosterona gel (de manhã)"
+        ],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno quando os exames ficarem prontos",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH (Lenzzeto + progesterona + testosterona gel)",
+          "meta": {
+            "descricao": "Coletar exames e retornar",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    }
+  ]
+};
+let STATE={patients:[],sel:null,loaded:false,demo:false};
+
+function avatarInitials(nome){return (nome||"?").split(" ").filter(Boolean).slice(0,2).map(s=>s[0]).join("").toUpperCase();}
+function colorFor(nome){let h=0;for(const c of (nome||"")) h=(h*31+c.charCodeAt(0))%PALETTE.length;return PALETTE[h];}
+function avatarEl(p,cls){
+  if(p.foto) return `<img class="av ${cls||''}" src="${p.foto}" alt="">`;
+  return `<div class="av ${cls||''}" style="background:${colorFor(p.nome)}">${avatarInitials(p.nome)}</div>`;
+}
+function fmtDateShort(iso){ if(!iso) return "—"; try{const d=new Date(iso);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}catch(e){return iso;} }
+function isDate(s){ return typeof s==='string' && /^\d{4}-\d{2}-\d{2}/.test(s); }
+function diasFaltando(s){ if(!isDate(s)) return null; const d=new Date(s); const now=new Date(); return Math.ceil((d-now)/(1000*60*60*24)); }
+
+function statusPill(v){
+  if(v===true||v==='alcancada') return `<span class="pill p-ok">alcançada</span>`;
+  if(v==='vencida') return `<span class="pill p-late">vencida</span>`;
+  if(v==='em_andamento') return `<span class="pill p-wait">em andamento</span>`;
+  if(v===false) return `<span class="pill p-tbd">pendente</span>`;
+  return `<span class="pill p-tbd">a confirmar</span>`;
+}
+function termoPill(v){ if(v===true) return `<span class="pill p-ok">aceito</span>`; if(v===false) return `<span class="pill p-tbd">pendente</span>`; return `<span class="pill p-tbd">a confirmar</span>`; }
+function val(v){ if(v===null||v===undefined||v==="") return `<span class="tbd">a confirmar</span>`; if(typeof v==='string' && v.toLowerCase().includes('a confirmar')) return `<span class="tbd">${v}</span>`; return v; }
+
+async function fetchData(){
+  try{
+    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store'});
+    if(!r.ok) throw 0;
+    const d=await r.json();
+    STATE.patients=d.pacientes||[]; STATE.loaded=true; STATE.demo=false; render();
+  }catch(e){
+    // fallback: dados de exemplo embutidos (modo demo, pra iterar o visual sem backend)
+    STATE.patients=(SAMPLE_DATA&&SAMPLE_DATA.pacientes)||[]; STATE.loaded=true; STATE.demo=true; render();
+  }
+}
+
+function render(){
+  const app=document.getElementById('app');
+  const view=document.getElementById('view');
+  const ativas=STATE.patients.filter(p=>p.ativa).length;
+  document.getElementById('count').textContent=`${ativas} ativas / ${STATE.patients.length} total`;
+  var _ll=document.getElementById('livelbl'); if(_ll) _ll.textContent=STATE.demo?'modo demo (dados de exemplo)':'ao vivo';
+  if(STATE.sel){ const p=STATE.patients.find(x=>x.telefone===STATE.sel); if(p){view.innerHTML=detailHTML(p);scrollWA();return;} }
+  const q=(document.getElementById('search').value||"").toLowerCase();
+  const list=STATE.patients.filter(p=>(p.nome||"").toLowerCase().includes(q));
+  view.innerHTML=`<div class="grid">${list.map(cardHTML).join("")||'<p style="color:#7c8a86;padding:20px">Nenhuma paciente.</p>'}</div>`;
+}
+
+function cardHTML(p){
+  return `<div class="pcard" onclick="open_('${p.telefone}')">
+    ${avatarEl(p)}
+    <div>
+      <div class="nm">${p.nome}</div>
+      <div class="sub">última: ${fmtDateShort(p.ultimaInteracao)}</div>
+      <span class="badge ${p.ativa?'b-ativa':'b-inativa'}">${p.ativa?'ativa':'inativa'}</span>
+    </div>
+  </div>`;
+}
+
+function detailHTML(p){
+  const m=p.marcos||{};
+  const msgs=(p.mensagens||[]).map(x=>`
+    <div class="msg ${x.de==='joana'?'m-joana':'m-pac'}">${escapeHtml(x.texto)}<span class="m-time">${x.hora||''}</span></div>`).join("")
+    || '<div class="wa-empty">Sem conversa ainda. A paciente não respondeu.</div>';
+  const cycles=(p.ciclos||[]).map(c=>`<span class="cyc ${c.atual?'cur':(c.meta&&c.meta.status==='alcancada'?'done':'')}">Ciclo ${c.numero}${c.meta&&c.meta.status==='alcancada'?' ✓':''}${c.atual?' (atual)':''}</span>`).join("");
+  const metaDias=m.metaRetorno?diasFaltando(m.metaRetorno.data):null;
+  const metaLinha = m.metaRetorno ? (
+     isDate(m.metaRetorno.data)
+       ? `<div class="big">${new Date(m.metaRetorno.data).toLocaleDateString('pt-BR')}</div><div style="font-size:13px;color:#7c8a86">${metaDias>=0?`faltam ${metaDias} dias`:`vencida há ${-metaDias} dias`}</div>`
+       : `<div style="margin-top:4px">${val(m.metaRetorno.data)}</div>`
+   ) : '<span class="tbd">a confirmar</span>';
+
+  return `<div class="back" onclick="open_(null)">‹ voltar</div>
+  <div class="detail">
+    <div class="phone"><div class="wa">
+      <div class="wa-hd">${avatarEl(p)}<div><div class="nm">${p.nome}</div><div class="st">${p.ativa?'conversa ativa':'sem resposta ainda'}</div></div></div>
+      <div class="wa-body" id="wabody">${msgs}</div>
+    </div></div>
+
+    <div class="panel">
+      <div class="pnhead">${avatarEl(p)}<div>
+        <div class="nm">${p.nome}</div>
+        <div style="margin-top:8px" class="cycles">${cycles||''}</div>
+      </div></div>
+
+      <div class="mcard meta">
+        <div class="lb">🎯 Meta · consulta de retorno (30 dias) ${m.metaRetorno?statusPill(m.metaRetorno.status):''}</div>
+        ${metaLinha}
+      </div>
+
+      <div class="mcard"><div class="lb">📄 Termo LGPD ${m.termoLGPD?termoPill(m.termoLGPD.aceito):''}</div><div class="vl">${m.termoLGPD&&m.termoLGPD.data?('aceito em '+new Date(m.termoLGPD.data).toLocaleDateString('pt-BR')):val(m.termoLGPD?m.termoLGPD.aceito===true?'aceito':'a confirmar':null)}</div></div>
+      <div class="mcard"><div class="lb">🩺 Diagnóstico</div><div class="vl">${val(m.diagnostico)}</div></div>
+      <div class="mcard"><div class="lb">💊 Tratamento</div><div class="vl">${val(m.tratamento)}</div></div>
+      <div class="mcard"><div class="lb">💠 Medicamentos</div>${(m.medicamentos&&m.medicamentos.length)?`<ul class="meds">${m.medicamentos.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<div class="vl">${val(null)}</div>`}</div>
+      <div class="mcard"><div class="lb">📅 Última consulta</div><div class="vl">${val(m.ultimaConsulta)}</div></div>
+      <div class="mcard"><div class="lb">📆 Próxima consulta</div><div class="vl">${val(m.proximaConsulta)}</div></div>
+      <div class="mcard"><div class="lb">🔁 Check-ins</div><div class="vl">${val(m.checkins)}</div></div>
+    </div>
+  </div>`;
+}
+
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function open_(tel){STATE.sel=tel;render();window.scrollTo(0,0);}
+function scrollWA(){const b=document.getElementById('wabody');if(b)b.scrollTop=b.scrollHeight;}
+
+// login simples
+function tryLogin(){
+  const v=document.getElementById('pw').value.trim();
+  if(v==='donna' || v==='adere'){ sessionStorage.setItem('painel_ok','1'); showApp(); }
+  else document.getElementById('gerr').textContent='Senha incorreta.';
+}
+function showApp(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';fetchData();setInterval(fetchData,15000);}
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
+if(sessionStorage.getItem('painel_ok')==='1'){showApp();}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "_doc": "Fatos clínicos e de acompanhamento por paciente, exibidos no Painel da Joana. A Joana mantém este arquivo em tempo real conforme conversa/atualiza. Campos 'a confirmar' = a Dra. Isabelle preenche. Fonte da verdade dos FATOS clínicos densos = este arquivo; conversas vêm dos .md.",
+  "pacientes": {
+    "5511983929279": {
+      "nome": "Renata Lovetro",
+      "foto": null,
+      "marcos": {
+        "termoLGPD": { "aceito": true, "data": "2026-06-03" },
+        "diagnostico": "Climatério com sintomas vasomotores (fogachos) e insônia",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": ["a confirmar com a Dra. Isabelle (ciclo 2)"],
+        "ultimaConsulta": "a confirmar (consulta de retorno realizada)",
+        "proximaConsulta": "a confirmar (retorno em 30 dias)",
+        "checkins": "Semanal",
+        "metaRetorno": { "data": "a confirmar", "status": "em_andamento" }
+      },
+      "ciclos": [
+        { "numero": 1, "tratamento": "TRH inicial (início 01/06/2026)", "meta": { "descricao": "Consulta de retorno em 30 dias", "data": "a confirmar", "status": "alcancada" }, "atual": false },
+        { "numero": 2, "tratamento": "Novo tratamento pós-retorno (a confirmar com a Dra. Isabelle)", "meta": { "descricao": "Nova consulta de retorno em 30 dias", "data": "a confirmar", "status": "em_andamento" }, "atual": true }
+      ]
+    },
+    "5511999100016": {
+      "nome": "Anna Paola",
+      "foto": null,
+      "marcos": {
+        "termoLGPD": { "aceito": "a confirmar", "data": null },
+        "diagnostico": "Pós-menopausa (50 anos)",
+        "tratamento": "Implante hormonal",
+        "medicamentos": ["Implante hormonal (inserido em 23/06/2026)"],
+        "ultimaConsulta": "2026-06-23 (inserção do implante)",
+        "proximaConsulta": "a confirmar",
+        "checkins": "Semanal",
+        "metaRetorno": { "data": "a confirmar", "status": "em_andamento" }
+      },
+      "ciclos": [
+        { "numero": 1, "tratamento": "Implante hormonal (inserido 23/06/2026)", "meta": { "descricao": "Consulta de retorno em 30 dias", "data": "a confirmar", "status": "em_andamento" }, "atual": true }
+      ]
+    },
+    "5511976919161": {
+      "nome": "Patrícia Guimarães",
+      "foto": null,
+      "marcos": {
+        "termoLGPD": { "aceito": false, "data": null },
+        "diagnostico": "TRH (contexto clínico a confirmar)",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": ["Estradiol transdérmico (1 pump de manhã)", "Progesterona oral (à noite)", "Testosterona gel (de manhã, libido)"],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno para ajuste de dose (a confirmar)",
+        "checkins": "Semanal",
+        "metaRetorno": { "data": "a confirmar", "status": "em_andamento" }
+      },
+      "ciclos": [
+        { "numero": 1, "tratamento": "TRH (estradiol transdérmico + progesterona + testosterona gel)", "meta": { "descricao": "Retorno para ajuste de dose", "data": "a confirmar", "status": "em_andamento" }, "atual": true }
+      ]
+    },
+    "5511974421122": {
+      "nome": "Thaís Thomazzoni",
+      "foto": null,
+      "marcos": {
+        "termoLGPD": { "aceito": "a confirmar", "data": null },
+        "diagnostico": "TRH há 3 anos",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": ["Lenzzeto (2 sprays de estradiol de manhã, cada spray numa parte do antebraço)", "Progesterona (1 comprimido à noite)", "Testosterona gel (de manhã)"],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno quando os exames ficarem prontos",
+        "checkins": "Semanal",
+        "metaRetorno": { "data": "a confirmar", "status": "em_andamento" }
+      },
+      "ciclos": [
+        { "numero": 1, "tratamento": "TRH (Lenzzeto + progesterona + testosterona gel)", "meta": { "descricao": "Coletar exames e retornar", "data": "a confirmar", "status": "em_andamento" }, "atual": true }
+      ]
+    }
+  }
+}

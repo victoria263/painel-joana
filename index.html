@@ -121,7 +121,7 @@
   .back{display:inline-flex;align-items:center;gap:7px;margin:26px 0 18px;color:var(--accent);font-weight:600;font-size:14px;
       cursor:pointer;background:none;border:none;padding:4px 2px}
   .back:hover{color:var(--accent-ink)}
-  .detail{display:grid;grid-template-columns:minmax(320px,1fr) minmax(300px,430px);gap:26px;padding-bottom:70px;align-items:start}
+  .detail{display:grid;grid-template-columns:minmax(300px,430px) minmax(320px,1fr);gap:26px;padding-bottom:70px;align-items:start}
   @media(max-width:840px){.detail{grid-template-columns:1fr}}
 
   /* mockup do WhatsApp (aparelho da paciente — identidade própria, intencional) */
@@ -713,11 +713,6 @@ function detailHTML(p){
 
   return `<button class="back" onclick="open_(null)">‹ Voltar às pacientes</button>
   <div class="detail">
-    <div class="phone"><div class="wa">
-      <div class="wa-hd">${avatarEl(p)}<div><div class="nm">${p.nome}</div><div class="stt">${p.ativa?'conversa ativa':'sem resposta ainda'}</div></div></div>
-      <div class="wa-body" id="wabody">${msgs}</div>
-    </div></div>
-
     <div class="panel">
       <div class="pnhead">${avatarEl(p)}<div>
         <div class="nm">${p.nome}</div>
@@ -737,6 +732,11 @@ function detailHTML(p){
       <div class="mcard"><div class="lb">${icon('calNext')} Próxima consulta</div><div class="vl">${val(m.proximaConsulta)}</div></div>
       <div class="mcard"><div class="lb">${icon('loop')} Check-ins</div><div class="vl">${val(m.checkins)}</div></div>
     </div>
+
+    <div class="phone"><div class="wa">
+      <div class="wa-hd">${avatarEl(p)}<div><div class="nm">${p.nome}</div><div class="stt">${p.ativa?'conversa ativa':'sem resposta ainda'}</div></div></div>
+      <div class="wa-body" id="wabody">${msgs}</div>
+    </div></div>
   </div>`;
 }
 

@@ -197,6 +197,22 @@
     *{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
   }
+  /* engajamento + cta + ciclo clicavel (Joana 20/07) */
+  .engrow{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .epill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px}
+  .epill.ok{color:var(--ok);background:var(--ok-bg)}
+  .epill.warn{color:var(--wait);background:var(--wait-bg)}
+  .epill.late{color:var(--late);background:var(--late-bg)}
+  .wacta{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ok);
+      background:var(--ok-bg);border:1px solid color-mix(in srgb,var(--ok) 28%,transparent);border-radius:99px;padding:4px 11px;cursor:pointer;text-decoration:none}
+  .wacta:hover{filter:brightness(.97)}
+  .homebanner{margin:22px 0 -6px;padding:12px 16px;border-radius:14px;background:var(--late-bg);
+      color:var(--late);border:1px solid color-mix(in srgb,var(--late) 28%,transparent);font-size:13px;font-weight:600}
+  .cyc{cursor:pointer}
+  .cyc.sel{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+  .cycmeta{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--card-soft);border:1px solid var(--line)}
+  .cycmeta .ct{font-family:var(--serif);font-weight:600;font-size:14px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cycmeta .cd{font-size:12.5px;color:var(--mut);line-height:1.5}
 </style>
 </head>
 <body>
@@ -667,7 +683,7 @@ function render(){
   document.getElementById('count').textContent=`${ativas} ativas · ${STATE.patients.length} total`;
   const ll=document.getElementById('livelbl'); if(ll) ll.textContent=STATE.demo?'modo demo':'ao vivo';
   const lc=document.getElementById('livechip'); if(lc) lc.classList.toggle('demo',STATE.demo);
-  if(STATE.sel){ const p=STATE.patients.find(x=>x.telefone===STATE.sel); if(p){view.innerHTML=detailHTML(p);scrollWA();return;} }
+  if(STATE.sel){ const p=STATE.patients.find(x=>x.telefone===STATE.sel); if(p){view.innerHTML=detailHTML(p);scrollWA();const cur=(p.ciclos||[]).find(c=>c.atual)||(p.ciclos||[])[0];if(cur)showCyc(p.telefone,cur.numero);return;} }
   const q=(document.getElementById('search').value||"").toLowerCase();
   const list=STATE.patients.filter(p=>(p.nome||"").toLowerCase().includes(q));
   view.innerHTML=`
@@ -677,7 +693,24 @@ function render(){
       <div class="sub">${ativas} paciente${ativas===1?'':'s'} em conversa ativa com a Joana neste momento</div>
       <div class="lgpd">${icon('shield')} Dados clínicos confidenciais — uso restrito, LGPD</div>
     </div>
+    ${(()=>{const late=STATE.patients.filter(p=>engInfo(p).level==='late').length;return late?`<div class="homebanner">${icon('shield')} ${late} paciente${late===1?'':'s'} sem resposta recente — vale um alô seu, ou é só pedir pra Joana insistir.</div>`:'';})()}
     <div class="grid">${list.map(cardHTML).join("")||'<p class="empty">Nenhuma paciente encontrada.</p>'}</div>`;
+}
+
+function lastPacienteTs(p){ const a=(p.mensagens||[]).filter(x=>x.de==='paciente'); return a.length?a[a.length-1].ts:null; }
+function daysSinceTs(ts){ if(!ts) return null; return Math.floor((Date.now()-new Date(ts).getTime())/86400000); }
+function engInfo(p){
+  const d=daysSinceTs(lastPacienteTs(p));
+  if(d===null) return {level:'late',label:'sem resposta ainda'};
+  if(d<=3) return {level:'ok',label: d<=0?'respondeu hoje':'em dia'};
+  if(d<=7) return {level:'warn',label:`${d} dias sem responder`};
+  return {level:'late',label:`${d} dias sem responder`};
+}
+function waLink(p){ return 'https://wa.me/'+((p.telefone||'')+'').replace(/\D/g,''); }
+function engRow(p,withCta){
+  const e=engInfo(p);
+  const cta = (withCta||e.level!=='ok') ? `<a class="wacta" href="${waLink(p)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Dar um alô no WhatsApp</a>` : '';
+  return `<div class="engrow"><span class="epill ${e.level}">${e.label}</span>${cta}</div>`;
 }
 
 function cardHTML(p){
@@ -695,6 +728,7 @@ function cardHTML(p){
       <span class="st ${p.ativa?'on':''}"><i></i>${p.ativa?'Ativa':'Inativa'}</span>
       <span class="mcount">${n} mensage${n===1?'m':'ns'}</span>
     </div>
+    ${engRow(p,false)}
   </div>`;
 }
 
@@ -703,7 +737,7 @@ function detailHTML(p){
   const msgs=(p.mensagens||[]).map(x=>`
     <div class="msg ${x.de==='joana'?'m-joana':'m-pac'}">${escapeHtml(x.texto)}<span class="m-time">${x.hora||''}</span></div>`).join("")
     || '<div class="wa-empty">Sem conversa ainda. A paciente não respondeu.</div>';
-  const cycles=(p.ciclos||[]).map(c=>`<span class="cyc ${c.atual?'cur':(c.meta&&c.meta.status==='alcancada'?'done':'')}">Ciclo ${c.numero}${c.meta&&c.meta.status==='alcancada'?' ✓':''}${c.atual?' · atual':''}</span>`).join("");
+  const cycles=(p.ciclos||[]).map(c=>`<span class="cyc ${c.atual?'cur':(c.meta&&c.meta.status==='alcancada'?'done':'')}" id="cyc-${c.numero}" role="button" tabindex="0" onclick="showCyc('${p.telefone}',${c.numero})" onkeydown="if(event.key==='Enter')showCyc('${p.telefone}',${c.numero})">Ciclo ${c.numero}${c.meta&&c.meta.status==='alcancada'?' ✓':''}${c.atual?' · atual':''}</span>`).join("");
   const metaDias=m.metaRetorno?diasFaltando(m.metaRetorno.data):null;
   const metaLinha = m.metaRetorno ? (
      isDate(m.metaRetorno.data)
@@ -718,6 +752,8 @@ function detailHTML(p){
         <div class="nm">${p.nome}</div>
         <div class="cycles">${cycles||''}</div>
       </div></div>
+      ${p.ciclos&&p.ciclos.length?'<div class="cycmeta" id="cycmeta"></div>':''}
+      ${engRow(p,true)}
 
       <div class="mcard meta">
         <div class="lb">${icon('target')} Meta · retorno em 30 dias ${m.metaRetorno?statusPill(m.metaRetorno.status):''}</div>
@@ -742,6 +778,17 @@ function detailHTML(p){
 
 function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function open_(tel){STATE.sel=tel;render();window.scrollTo(0,0);}
+function showCyc(tel,num){
+  const p=(STATE.patients||[]).find(x=>x.telefone===tel); if(!p)return;
+  const c=(p.ciclos||[]).find(y=>y.numero===num); const el=document.getElementById('cycmeta'); if(!c||!el)return;
+  const meta=c.meta||{};
+  const dt = isDate(meta.data)? new Date(meta.data).toLocaleDateString('pt-BR') : (meta.data||'');
+  el.innerHTML=`<div class="ct">Ciclo ${c.numero}${c.atual?' · atual':''} ${meta.status?statusPill(meta.status):''}</div>
+    <div class="cd">${escapeHtml(c.tratamento||'')}</div>
+    <div class="cd" style="margin-top:6px">${escapeHtml(meta.descricao||'')}${dt?(' — '+dt):''}</div>`;
+  document.querySelectorAll('.cyc').forEach(x=>x.classList.remove('sel'));
+  const b=document.getElementById('cyc-'+num); if(b)b.classList.add('sel');
+}
 function scrollWA(){const b=document.getElementById('wabody');if(b)b.scrollTop=b.scrollHeight;}
 
 // login simples

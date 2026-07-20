@@ -709,6 +709,7 @@ function engInfo(p){
   return {level:'late',label:`${d} dias sem responder`};
 }
 function waLink(p){ return 'https://wa.me/'+((p.telefone||'')+'').replace(/\D/g,''); }
+function fmtDataBR(s){ if(!isDate(s)) return s; const p=s.slice(0,10).split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function engRow(p,withCta){
   const e=engInfo(p);
   const cta = (withCta||e.level!=='ok') ? `<a class="wacta" href="${waLink(p)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Dar um alô no WhatsApp</a>` : '';
@@ -743,7 +744,7 @@ function detailHTML(p){
   const metaDias=m.metaRetorno?diasFaltando(m.metaRetorno.data):null;
   const metaLinha = m.metaRetorno ? (
      isDate(m.metaRetorno.data)
-       ? `<div class="big">${new Date(m.metaRetorno.data).toLocaleDateString('pt-BR')}</div><div class="when">${metaDias>=0?`faltam ${metaDias} dias`:`vencida há ${-metaDias} dias`}</div>`
+       ? `<div class="big">${fmtDataBR(m.metaRetorno.data)}</div><div class="when">${metaDias>=0?`faltam ${metaDias} dias`:`vencida há ${-metaDias} dias`}</div>`
        : `<div class="vl">${val(m.metaRetorno.data)}</div>`
    ) : `<div class="vl"><span class="tbd">a confirmar</span></div>`;
 
@@ -762,7 +763,7 @@ function detailHTML(p){
         ${metaLinha}
       </div>
 
-      <div class="mcard"><div class="lb">${icon('doc')} Termo LGPD ${m.termoLGPD?termoPill(m.termoLGPD.aceito):''}</div><div class="vl">${m.termoLGPD&&m.termoLGPD.data?('aceito em '+new Date(m.termoLGPD.data).toLocaleDateString('pt-BR')):val(m.termoLGPD?m.termoLGPD.aceito===true?'aceito':'a confirmar':null)}</div></div>
+      <div class="mcard"><div class="lb">${icon('doc')} Termo LGPD ${m.termoLGPD?termoPill(m.termoLGPD.aceito):''}</div><div class="vl">${m.termoLGPD&&m.termoLGPD.data?('aceito em '+fmtDataBR(m.termoLGPD.data)):val(m.termoLGPD?m.termoLGPD.aceito===true?'aceito':'a confirmar':null)}</div></div>
       <div class="mcard"><div class="lb">${icon('steth')} Diagnóstico</div><div class="vl">${val(m.diagnostico)}</div></div>
       <div class="mcard"><div class="lb">${icon('pill')} Tratamento</div><div class="vl">${val(m.tratamento)}</div></div>
       <div class="mcard"><div class="lb">${icon('list')} Medicamentos</div>${(m.medicamentos&&m.medicamentos.length)?`<ul class="meds">${m.medicamentos.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<div class="vl">${val(null)}</div>`}</div>

@@ -784,10 +784,9 @@ function showCyc(tel,num){
   const p=(STATE.patients||[]).find(x=>x.telefone===tel); if(!p)return;
   const c=(p.ciclos||[]).find(y=>y.numero===num); const el=document.getElementById('cycmeta'); if(!c||!el)return;
   const meta=c.meta||{};
-  const dt = isDate(meta.data)? new Date(meta.data).toLocaleDateString('pt-BR') : (meta.data||'');
   el.innerHTML=`<div class="ct">Ciclo ${c.numero}${c.atual?' · atual':''} ${meta.status?statusPill(meta.status):''}</div>
     <div class="cd">${escapeHtml(c.tratamento||'')}</div>
-    <div class="cd" style="margin-top:6px">${escapeHtml(meta.descricao||'')}${dt?(' — '+dt):''}</div>`;
+    <div class="cd" style="margin-top:6px">${escapeHtml(meta.descricao||'')}</div>`;
   document.querySelectorAll('.cyc').forEach(x=>x.classList.remove('sel'));
   const b=document.getElementById('cyc-'+num); if(b)b.classList.add('sel');
 }

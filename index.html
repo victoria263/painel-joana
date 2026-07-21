@@ -669,7 +669,7 @@ function val(v){ if(v===null||v===undefined||v==="") return `<span class="tbd">a
 
 async function fetchData(){
   try{
-    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store'});
+    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store',headers:{'X-Panel-Token':sessionStorage.getItem('painel_token')||''}});
     if(!r.ok) throw 0;
     const d=await r.json();
     STATE.patients=d.pacientes||[]; STATE.loaded=true; STATE.demo=false; render();
@@ -794,16 +794,19 @@ function showCyc(tel,num){
 function scrollWA(){const b=document.getElementById('wabody');if(b)b.scrollTop=b.scrollHeight;}
 
 // login simples
-function tryLogin(){
+async function tryLogin(){
   const v=document.getElementById('pw').value.trim();
-  if(v==='donna' || v==='adere'){ sessionStorage.setItem('painel_ok','1'); showApp(); }
-  else document.getElementById('gerr').textContent='Senha incorreta. Tente novamente.';
+  try{
+    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store',headers:{'X-Panel-Token':v}});
+    if(r.ok){ sessionStorage.setItem('painel_token',v); showApp(); }
+    else document.getElementById('gerr').textContent='Senha incorreta. Tente novamente.';
+  }catch(e){ document.getElementById('gerr').textContent='Erro de conexão. Tente de novo.'; }
 }
 function showApp(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';fetchData();setInterval(fetchData,15000);}
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
 applyTheme(localStorage.getItem('painel_theme'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>applyTheme(localStorage.getItem('painel_theme')));
-if(sessionStorage.getItem('painel_ok')==='1'){showApp();}
+if(sessionStorage.getItem('painel_token')){showApp();}
 </script>
 </body>
 </html>

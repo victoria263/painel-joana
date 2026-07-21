@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADERE.AI · Painel da Joana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6F3; --bg-soft:#F1E7E2; --card:#FFFFFF; --card-soft:#F9F2EE;
+    --ink:#2E2A2B; --mut:#7C7173; --faint:#AC9F9E; --line:#EDE3DE; --line-strong:#DFD2CC;
+    --accent:#C68B98; --accent-ink:#AC6577; --accent-soft:rgba(198,139,152,.13);
+    --ok:#57855F; --ok-bg:#E6EFE6; --wait:#9A7838; --wait-bg:#F3EAD6;
+    --late:#B4645A; --late-bg:#F6E5E0; --tbd:#8C8080; --tbd-bg:#EFE8E5;
+    --shadow:0 1px 2px rgba(20,20,19,.04),0 8px 28px rgba(20,20,19,.06);
+    --shadow-lift:0 2px 4px rgba(20,20,19,.05),0 14px 40px rgba(20,20,19,.10);
+    --wa-out:#d9fdd3;
+    --serif:"Lora",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#262223; --bg-soft:#201C1D; --card:#302B2C; --card-soft:#353031;
+      --ink:#F1E9E7; --mut:#AA9E9D; --faint:#7E7271; --line:#3E3738; --line-strong:#4B4344;
+      --accent:#D9A6AF; --accent-ink:#E3B7BE; --accent-soft:rgba(217,166,175,.15);
+      --ok:#9DC0A2; --ok-bg:#2E3B30; --wait:#D6B173; --wait-bg:#3D372A;
+      --late:#E09A90; --late-bg:#43302D; --tbd:#98908F; --tbd-bg:#37312F;
+      --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.30);
+      --shadow-lift:0 2px 6px rgba(0,0,0,.30),0 18px 48px rgba(0,0,0,.40);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#FAF6F3; --bg-soft:#F1E7E2; --card:#FFFFFF; --card-soft:#F9F2EE;
+    --ink:#2E2A2B; --mut:#7C7173; --faint:#AC9F9E; --line:#EDE3DE; --line-strong:#DFD2CC;
+    --accent:#C68B98; --accent-ink:#AC6577; --accent-soft:rgba(198,139,152,.13);
+    --ok:#57855F; --ok-bg:#E6EFE6; --wait:#9A7838; --wait-bg:#F3EAD6;
+    --late:#B4645A; --late-bg:#F6E5E0; --tbd:#8C8080; --tbd-bg:#EFE8E5;
+    --shadow:0 1px 2px rgba(20,20,19,.04),0 8px 28px rgba(20,20,19,.06);
+    --shadow-lift:0 2px 4px rgba(20,20,19,.05),0 14px 40px rgba(20,20,19,.10);
+  }
+  :root[data-theme="dark"]{
+    --bg:#262223; --bg-soft:#201C1D; --card:#302B2C; --card-soft:#353031;
+    --ink:#F1E9E7; --mut:#AA9E9D; --faint:#7E7271; --line:#3E3738; --line-strong:#4B4344;
+    --accent:#D9A6AF; --accent-ink:#E3B7BE; --accent-soft:rgba(217,166,175,.15);
+    --ok:#9DC0A2; --ok-bg:#2E3B30; --wait:#D6B173; --wait-bg:#3D372A;
+    --late:#E09A90; --late-bg:#43302D; --tbd:#98908F; --tbd-bg:#37312F;
+    --shadow:0 1px 2px rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.30);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.30),0 18px 48px rgba(0,0,0,.40);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;
+       -webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .serif{font-family:var(--serif)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+  /* ── spark (marca) ─────────────────────────────── */
+  .spark{display:inline-block;flex:0 0 auto;color:var(--accent)}
+  .spark svg{display:block;width:100%;height:100%;fill:currentColor}
+
+  /* ── topbar ────────────────────────────────────── */
+  .tb{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line);
+      backdrop-filter:blur(8px)}
+  .tb-in{display:flex;align-items:center;gap:14px;padding:14px 0;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .brand .spark{width:22px;height:22px}
+  .hero .joana-ph{width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:16px;
+      box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent),var(--shadow-lift)}
+  .brand .bt{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:.01em;white-space:nowrap}
+  .brand .be{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:1px}
+  .tb .search{margin-left:auto;flex:1;min-width:160px;max-width:300px;position:relative}
+  .tb .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--faint);fill:none;stroke-width:2;pointer-events:none}
+  .tb .search input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:99px;
+      padding:8px 16px 8px 36px;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .tb .search input::placeholder{color:var(--faint)}
+  .tb .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--mut);
+      background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 13px;white-space:nowrap;
+      font-variant-numeric:tabular-nums}
+  .dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 45%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .demo .dot-live{background:var(--wait);animation:none}
+  .tbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:99px;
+      background:var(--card);border:1px solid var(--line);cursor:pointer;color:var(--mut);transition:color .15s,border-color .15s}
+  .tbtn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .tbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ── hero / saudação ───────────────────────────── */
+  .hero{padding:52px 0 8px;text-align:center}
+  .hero .spark{width:30px;height:30px;margin-bottom:14px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(26px,4vw,38px);letter-spacing:-.01em;text-wrap:balance}
+  .hero .sub{color:var(--mut);font-size:14px;margin-top:10px}
+  .hero .lgpd{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:11.5px;color:var(--faint);
+      border:1px solid var(--line);border-radius:99px;padding:5px 14px}
+  .hero .lgpd svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ── grid de pacientes ─────────────────────────── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;padding:34px 0 20px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;cursor:pointer;
+      box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+  .pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift);border-color:var(--line-strong)}
+  .pcard .top{display:flex;align-items:center;gap:14px}
+  .av{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+      color:#FAF9F5;font-weight:600;font-size:18px;font-family:var(--serif);letter-spacing:.02em}
+  .pcard .nm{font-family:var(--serif);font-weight:600;font-size:17.5px;letter-spacing:-.005em}
+  .pcard .sub{font-size:12px;color:var(--mut);margin-top:2px;font-variant-numeric:tabular-nums}
+  .pcard .ft{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .st{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--mut)}
+  .st i{width:7px;height:7px;border-radius:50%;background:var(--tbd);flex:0 0 auto}
+  .st.on{color:var(--ok)} .st.on i{background:var(--ok)}
+  .mcount{font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .empty{color:var(--mut);padding:30px 8px;text-align:center;font-size:14px}
+
+  /* ── detalhe ───────────────────────────────────── */
+  .back{display:inline-flex;align-items:center;gap:7px;margin:26px 0 18px;color:var(--accent);font-weight:600;font-size:14px;
+      cursor:pointer;background:none;border:none;padding:4px 2px}
+  .back:hover{color:var(--accent-ink)}
+  .detail{display:grid;grid-template-columns:minmax(300px,430px) minmax(320px,1fr);gap:26px;padding-bottom:70px;align-items:start}
+  @media(max-width:840px){.detail{grid-template-columns:1fr}}
+
+  /* mockup do WhatsApp (aparelho da paciente — identidade própria, intencional) */
+  .phone{background:#101418;border-radius:26px;padding:11px;box-shadow:var(--shadow-lift)}
+  .wa{background:#efeae2;border-radius:17px;overflow:hidden;height:640px;display:flex;flex-direction:column}
+  .wa-hd{background:#075E54;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .wa-hd .av{width:38px;height:38px;font-size:14px}
+  .wa-hd .nm{font-weight:600;font-size:15px;font-family:var(--sans)}
+  .wa-hd .stt{font-size:11.5px;opacity:.85}
+  .wa-body{flex:1;overflow-y:auto;padding:16px 12px;background:#e5ddd4}
+  .msg{max-width:78%;padding:7px 10px;border-radius:9px;margin-bottom:8px;font-size:13.5px;color:#111;position:relative;
+      box-shadow:0 1px 1px rgba(0,0,0,.06);white-space:pre-wrap;word-wrap:break-word}
+  .m-joana{background:var(--wa-out);margin-left:auto;border-top-right-radius:2px}
+  .m-pac{background:#fff;margin-right:auto;border-top-left-radius:2px}
+  .m-time{display:block;font-size:10px;color:#667;text-align:right;margin-top:3px;font-variant-numeric:tabular-nums}
+  .wa-empty{color:#8a948f;text-align:center;margin-top:40px;font-size:13px}
+
+  /* ── painel clínico ────────────────────────────── */
+  .panel{display:flex;flex-direction:column;gap:14px}
+  .pnhead{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+      padding:20px;box-shadow:var(--shadow)}
+  .pnhead .av{width:56px;height:56px;font-size:20px}
+  .pnhead .nm{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.005em}
+  .cycles{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+  .cyc{font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:99px;border:1px solid var(--line);color:var(--mut);
+      font-variant-numeric:tabular-nums}
+  .cyc.done{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+  .cyc.cur{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+
+  .mcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
+  .mcard .lb{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--faint)}
+  .mcard .lb svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+  .mcard .vl{font-size:14.5px;margin-top:7px;line-height:1.55}
+  .meds{margin:7px 0 0;padding-left:0;list-style:none}
+  .meds li{font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .meds li:last-child{border-bottom:none;padding-bottom:0}
+  .pill{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:2.5px 10px;border-radius:99px;margin-left:auto}
+  .p-ok{background:var(--ok-bg);color:var(--ok)}
+  .p-wait{background:var(--wait-bg);color:var(--wait)}
+  .p-late{background:var(--late-bg);color:var(--late)}
+  .p-tbd{background:var(--tbd-bg);color:var(--tbd)}
+  .meta{background:linear-gradient(135deg,var(--accent-soft),transparent 65%),var(--card);border-color:color-mix(in srgb,var(--accent) 30%,var(--line))}
+  .meta .big{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--accent-ink);margin-top:6px;font-variant-numeric:tabular-nums}
+  .meta .when{font-size:12.5px;color:var(--mut);margin-top:2px}
+  .tbd{color:var(--faint);font-style:italic}
+
+  /* ── login ─────────────────────────────────────── */
+  .gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99;padding:20px}
+  .gbox{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:44px 38px;max-width:380px;width:100%;
+      text-align:center;box-shadow:var(--shadow-lift)}
+  .gbox .spark{width:34px;height:34px;margin-bottom:18px}
+  .gbox .ge{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .gbox h1{font-family:var(--serif);font-weight:500;font-size:26px;margin-top:6px;letter-spacing:-.01em}
+  .gbox p{color:var(--mut);font-size:13px;margin:12px 0 24px;line-height:1.6}
+  .gbox input{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--line);border-radius:12px;font-size:15px;
+      text-align:center;letter-spacing:.12em;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+  .gbox input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .gbox button{width:100%;margin-top:12px;padding:12px;border:none;border-radius:99px;background:var(--accent);color:#FAF9F5;
+      font-weight:600;font-size:15px;cursor:pointer;transition:background .15s,transform .1s}
+  .gbox button:hover{background:var(--accent-ink)}
+  .gbox button:active{transform:scale(.985)}
+  .gbox .err{color:var(--late);font-size:12.5px;margin-top:12px;min-height:17px}
+
+  .foot{color:var(--faint);font-size:11.5px;text-align:center;padding:24px 0 44px}
+
+  @media(max-width:640px){
+    .hero{padding:36px 0 4px}
+    .tb-in{gap:10px}
+    .brand .be{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+  /* engajamento + cta + ciclo clicavel (Joana 20/07) */
+  .engrow{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .epill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px}
+  .epill.ok{color:var(--ok);background:var(--ok-bg)}
+  .epill.warn{color:var(--wait);background:var(--wait-bg)}
+  .epill.late{color:var(--late);background:var(--late-bg)}
+  .wacta{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ok);
+      background:var(--ok-bg);border:1px solid color-mix(in srgb,var(--ok) 28%,transparent);border-radius:99px;padding:4px 11px;cursor:pointer;text-decoration:none}
+  .wacta:hover{filter:brightness(.97)}
+  .homebanner{margin:22px 0 -6px;padding:12px 16px;border-radius:14px;background:var(--late-bg);
+      color:var(--late);border:1px solid color-mix(in srgb,var(--late) 28%,transparent);font-size:13px;font-weight:600;
+      display:flex;align-items:center;gap:9px}
+  .homebanner svg{width:16px;height:16px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .cyc{cursor:pointer}
+  .cyc.sel{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+  .cycmeta{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--card-soft);border:1px solid var(--line)}
+  .cycmeta .ct{font-family:var(--serif);font-weight:600;font-size:14px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cycmeta .cd{font-size:12.5px;color:var(--mut);line-height:1.5}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 1.5l1.9 7.2 6.5-3.7-4.6 5.8 7.2 1.2-7.2 1.2 4.6 5.8-6.5-3.7L12 22.5l-1.9-7.2-6.5 3.7 4.6-5.8L1 12l7.2-1.2-4.6-5.8 6.5 3.7z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="gate" class="gate">
+  <div class="gbox">
+    <span class="spark"><svg><use href="#i-spark"/></svg></span>
+    <div class="ge">ADERE.AI</div>
+    <h1>Painel da Joana</h1>
+    <p>Acesso restrito — Dra. Isabelle e Victoria.<br>Dados clínicos confidenciais, protegidos pela LGPD.</p>
+    <input id="pw" type="password" placeholder="senha de acesso" autocomplete="off">
+    <button onclick="tryLogin()">Entrar</button>
+    <div class="err" id="gerr"></div>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="tb">
+    <div class="wrap">
+      <div class="tb-in">
+        <div class="brand">
+          <span class="spark"><svg><use href="#i-spark"/></svg></span>
+          <div>
+            <div class="bt">Painel da Joana</div>
+            <div class="be">ADERE.AI</div>
+          </div>
+        </div>
+        <div class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="search" placeholder="Buscar paciente…" oninput="render()">
+        </div>
+        <span class="chip" id="livechip"><span class="dot-live"></span><span id="livelbl">ao vivo</span></span>
+        <span class="chip" id="count">–</span>
+        <button class="tbtn" id="themebtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema claro/escuro">
+          <svg viewBox="0 0 24 24" id="themeicon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" id="view"></div>
+  <div class="foot">ADERE.AI · Painel da Joana · atualiza sozinho a cada 15s · uso restrito — LGPD</div>
+</div>
+
+<script>
+const JOANA_FOTO="data:image/jpeg;base64,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";
+const PALETTE=["#BC7E88","#748C6B","#6C88A0","#916F8A","#9C7C3C","#5F8E80"];
+const API_BASE="https://quick-acting-priority-input.trycloudflare.com";  // vazio = mesma origem. Pra apontar pra API ao vivo, cole aqui a URL do tunel.
+const SAMPLE_DATA={
+  "total": 4,
+  "ativas": 3,
+  "pacientes": [
+    {
+      "telefone": "5511983929279",
+      "nome": "Renata Lovetro",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T13:13:10.580707+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Olá paciente Renata Lovetro Dra Isabelle",
+          "ts": "2026-06-03T22:31:59.523353+00:00",
+          "hora": "03/06 22:31"
+        },
+        {
+          "de": "joana",
+          "texto": "Renata está chegando pela primeira vez — envio o termo conforme o template.\n\nOi Renata, aqui é a Joana, assistente da Dra. Isabelle.\n\nPra te acompanhar, preciso da sua autorização pra trocar mensagem com você entre as consultas — lembretes, dúvidas, suporte do dia a dia.\n\nVeja o termo completo aqui: https://docs.goo...",
+          "ts": "2026-06-03T22:32:40.602041+00:00",
+          "hora": "03/06 22:32"
+        },
+        {
+          "de": "paciente",
+          "texto": "A",
+          "ts": "2026-06-03T22:33:34.444321+00:00",
+          "hora": "03/06 22:33"
+        },
+        {
+          "de": "joana",
+          "texto": "Ótimo, Renata! Aceitação registrada. 🩺\n\nSou a Joana, assistente da Dra. Isabelle. Estou aqui pra te acompanhar entre as consultas — lembretes de medicação, dúvidas do dia a dia, suporte quando precisar. Não sou médica e não substituo a Isabelle, mas sou a ponte entre você e ela.\n\nSempre que tiver uma dúvida ou preci...",
+          "ts": "2026-06-03T22:33:44.762765+00:00",
+          "hora": "03/06 22:33"
+        },
+        {
+          "de": "paciente",
+          "texto": "Olá boa tarde!\nTd bem\nE vc?",
+          "ts": "2026-06-10T18:04:41.605277+00:00",
+          "hora": "10/06 18:04"
+        },
+        {
+          "de": "joana",
+          "texto": "Boa tarde, Renata! Tudo bem por aqui, obrigada por perguntar.\n\nFico feliz que você tenha entrado em contato. Como você está se sentindo? Alguma dúvida ou coisa que queira conversar desde a última consulta com a Dra. Isabelle?",
+          "ts": "2026-06-10T18:04:54.550412+00:00",
+          "hora": "10/06 18:04"
+        },
+        {
+          "de": "paciente",
+          "texto": "Referente as medicações nenhuma dúvida, estou seguindo certinho.\nReferente as sintomas até agora não notei nenhuma modificação continua com fogachos, insônia devido aos despertares,",
+          "ts": "2026-06-10T18:08:40.789156+00:00",
+          "hora": "10/06 18:08"
+        },
+        {
+          "de": "joana",
+          "texto": "Que bom saber que está seguindo a medicação certinho, Renata — isso faz muita diferença no tratamento.\n\nSobre os fogachos e os despertares noturnos continuarem, vou passar essa informação pra Dra. Isabelle. Ela precisa saber que os sintomas ainda estão presentes desde a última consulta, para avaliar como está sendo ...",
+          "ts": "2026-06-10T18:08:56.562489+00:00",
+          "hora": "10/06 18:08"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok obrigada 🙏",
+          "ts": "2026-07-09T13:31:40.506330+00:00",
+          "hora": "09/07 13:31"
+        },
+        {
+          "de": "joana",
+          "texto": "Imagina, Renata! Como voce esta se sentindo nesses primeiros dias com o adesivo? Se notar qualquer coisa na pele, alguma vermelhidao ou incomodo, ou tiver duvida, e so me contar. Estou aqui com voce.",
+          "ts": "2026-07-09T13:32:08.103390+00:00",
+          "hora": "09/07 13:32"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok adesivo foi tranquilo sem vermelhidão ou  incômodo 🙏\nFogachos continuam e irritação também, qualidade de sono muito boa",
+          "ts": "2026-07-09T14:18:48.161443+00:00",
+          "hora": "09/07 14:18"
+        },
+        {
+          "de": "joana",
+          "texto": "Que bom, Renata, fico muito feliz que o adesivo foi tranquilo, sem vermelhidao nem incomodo, e que o seu sono melhorou tanto. Isso e um otimo sinal.\n\nSobre os fogachos e a irritacao que continuam, obrigada por me contar certinho. Vou passar isso pra Dra. Isabelle, pra ela ter esse quadro no seu acompanhamento. Voce ...",
+          "ts": "2026-07-09T14:19:28.200328+00:00",
+          "hora": "09/07 14:19"
+        },
+        {
+          "de": "paciente",
+          "texto": "Ok",
+          "ts": "2026-07-13T13:09:29.545907+00:00",
+          "hora": "13/07 13:09"
+        },
+        {
+          "de": "paciente",
+          "texto": "Já coloquei obrigada",
+          "ts": "2026-07-13T13:13:10.580707+00:00",
+          "hora": "13/07 13:13"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": true,
+          "data": "2026-06-03"
+        },
+        "diagnostico": "Climatério com sintomas vasomotores (fogachos) e insônia",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "a confirmar com a Dra. Isabelle (ciclo 2)"
+        ],
+        "ultimaConsulta": "a confirmar (consulta de retorno realizada)",
+        "proximaConsulta": "a confirmar (retorno em 30 dias)",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH inicial (início 01/06/2026)",
+          "meta": {
+            "descricao": "Consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "alcancada"
+          },
+          "atual": false
+        },
+        {
+          "numero": 2,
+          "tratamento": "Novo tratamento pós-retorno (a confirmar com a Dra. Isabelle)",
+          "meta": {
+            "descricao": "Nova consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511999100016",
+      "nome": "Anna Paola",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T13:40:06.908042+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Oi",
+          "ts": "2026-07-01T18:05:19.952861+00:00",
+          "hora": "01/07 18:05"
+        },
+        {
+          "de": "joana",
+          "texto": "Oi Anna Paola, que bom te ver por aqui! Fico feliz que voce apareceu.\n\nAntes da gente comecar, preciso so do seu aceite do termo de consentimento, que explica como eu cuido dos seus dados. Eu te mandei ele aqui em cima, naquele botao 'Ler o termo'. Depois de ler, e so me responder com a palavra aceito que eu ja sigo...",
+          "ts": "2026-07-01T18:05:51.574987+00:00",
+          "hora": "01/07 18:05"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_fup_checkin) reaquecimento — sem resposta desde 01/07, termo pendente",
+          "ts": "2026-07-13T13:40:06.908042+00:00",
+          "hora": "13/07 13:40"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": "a confirmar",
+          "data": null
+        },
+        "diagnostico": "Pós-menopausa (50 anos)",
+        "tratamento": "Implante hormonal",
+        "medicamentos": [
+          "Implante hormonal (inserido em 23/06/2026)"
+        ],
+        "ultimaConsulta": "2026-06-23 (inserção do implante)",
+        "proximaConsulta": "a confirmar",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "Implante hormonal (inserido 23/06/2026)",
+          "meta": {
+            "descricao": "Consulta de retorno em 30 dias",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511976919161",
+      "nome": "Patrícia Guimarães",
+      "foto": null,
+      "ativa": false,
+      "ultimaInteracao": "2026-07-13T13:40:07.577514+00:00",
+      "mensagens": [
+        {
+          "de": "joana",
+          "texto": "(template joana_termo_consentimento) envio inicial do termo de consentimento",
+          "ts": "2026-07-13T13:40:07.577514+00:00",
+          "hora": "13/07 13:40"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": false,
+          "data": null
+        },
+        "diagnostico": "TRH (contexto clínico a confirmar)",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "Estradiol transdérmico (1 pump de manhã)",
+          "Progesterona oral (à noite)",
+          "Testosterona gel (de manhã, libido)"
+        ],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno para ajuste de dose (a confirmar)",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH (estradiol transdérmico + progesterona + testosterona gel)",
+          "meta": {
+            "descricao": "Retorno para ajuste de dose",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    },
+    {
+      "telefone": "5511974421122",
+      "nome": "Thaís Thomazzoni",
+      "foto": null,
+      "ativa": true,
+      "ultimaInteracao": "2026-07-13T14:15:03.610907+00:00",
+      "mensagens": [
+        {
+          "de": "paciente",
+          "texto": "Olá! Tudo bem? 😊 Provavelmente estou agora registrando uma nova história de\nfamília.\n\nAssim que eu finalizar por aqui, já te retorno pessoalmente para conversarmos. 📸\n\n*Se for urgente ou emergência por favor ligue‼️*",
+          "ts": "2026-06-26T11:53:00.558940+00:00",
+          "hora": "26/06 11:53"
+        },
+        {
+          "de": "joana",
+          "texto": "Oi Thais, tudo bem? Que trabalho lindo, registrar uma nova historia de familia. Pode ficar tranquila e seguir ai, sem pressa nenhuma.\n\nQuando voce terminar e tiver um tempinho, me avisa que eu te explico rapidinho como vai funcionar o nosso acompanhamento e seguimos daqui. Fico no aguardo.",
+          "ts": "2026-06-26T11:54:20.740333+00:00",
+          "hora": "26/06 11:54"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_fup_checkin) reaquecimento — sem resposta desde 26/06",
+          "ts": "2026-07-13T13:40:06.409229+00:00",
+          "hora": "13/07 13:40"
+        },
+        {
+          "de": "paciente",
+          "texto": "Bom dia! Tudo bem? Tudo certo estou usando a medicação de forma correta e sem esquecimento 🙌🏻\nSó preciso fazer os exames agora",
+          "ts": "2026-07-13T13:40:56.216231+00:00",
+          "hora": "13/07 13:40"
+        },
+        {
+          "de": "joana",
+          "texto": "Bom dia, Thais! Que alegria te ver por aqui, e melhor ainda saber que voce esta seguindo a medicacao certinho, sem esquecer. Isso faz toda a diferenca no tratamento, parabens pelo cuidado.\n\nSobre os exames, posso te ajudar a organizar. Voce ja esta com o pedido da Dra. Isabelle em maos, aquele com a lista dos exames...",
+          "ts": "2026-07-13T13:43:24.421920+00:00",
+          "hora": "13/07 13:43"
+        },
+        {
+          "de": "joana",
+          "texto": "(template joana_termo_consentimento) envio do termo p/ formalizar aceite LGPD",
+          "ts": "2026-07-13T13:46:05.932645+00:00",
+          "hora": "13/07 13:46"
+        },
+        {
+          "de": "joana",
+          "texto": "So uma formalidade rapidinha antes de a gente seguir com os exames, Thais: te mandei ali em cima o termo de consentimento, que explica como eu cuido dos seus dados aqui. E so tocar em Ler o termo e me responder com a palavra aceito. Assim que voce fizer isso, a gente continua certinho com a organizacao dos seus exames.",
+          "ts": "2026-07-13T13:46:27.548527+00:00",
+          "hora": "13/07 13:46"
+        },
+        {
+          "de": "paciente",
+          "texto": "Aceito",
+          "ts": "2026-07-13T13:48:09.408178+00:00",
+          "hora": "13/07 13:48"
+        },
+        {
+          "de": "joana",
+          "texto": "Recebido, Thais, obrigada. Seja muito bem-vinda ao acompanhamento. A partir de agora eu fico por aqui com voce no dia a dia, pra qualquer duvida sobre a medicacao, os exames, a agenda ou o que voce precisar com a Dra. Isabelle.\n\nVoltando aos seus exames: voce ja esta com o pedido da Dra. Isabelle em maos, aquele com...",
+          "ts": "2026-07-13T13:48:25.199816+00:00",
+          "hora": "13/07 13:48"
+        },
+        {
+          "de": "paciente",
+          "texto": "Eu já agendei todos os exames para uma data única porém só consegui para o dia 11/08",
+          "ts": "2026-07-13T14:15:03.610907+00:00",
+          "hora": "13/07 14:15"
+        }
+      ],
+      "marcos": {
+        "termoLGPD": {
+          "aceito": "a confirmar",
+          "data": null
+        },
+        "diagnostico": "TRH há 3 anos",
+        "tratamento": "Reposição hormonal (TRH)",
+        "medicamentos": [
+          "Lenzzeto (2 sprays de estradiol de manhã, cada spray numa parte do antebraço)",
+          "Progesterona (1 comprimido à noite)",
+          "Testosterona gel (de manhã)"
+        ],
+        "ultimaConsulta": "a confirmar",
+        "proximaConsulta": "Retorno quando os exames ficarem prontos",
+        "checkins": "Semanal",
+        "metaRetorno": {
+          "data": "a confirmar",
+          "status": "em_andamento"
+        }
+      },
+      "ciclos": [
+        {
+          "numero": 1,
+          "tratamento": "TRH (Lenzzeto + progesterona + testosterona gel)",
+          "meta": {
+            "descricao": "Coletar exames e retornar",
+            "data": "a confirmar",
+            "status": "em_andamento"
+          },
+          "atual": true
+        }
+      ]
+    }
+  ]
+};
+let STATE={patients:[],sel:null,loaded:false,demo:false};
+
+/* ── tema (claro/escuro) ─────────────────────────── */
+function applyTheme(t){
+  if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;}
+  else{delete document.documentElement.dataset.theme;}
+  const moon='<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/>';
+  const sun='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  const dark=(t==='dark')||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('themeicon').innerHTML=dark?sun:moon;
+}
+function toggleTheme(){
+  const cur=document.documentElement.dataset.theme;
+  const sysDark=matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark=cur?cur==='dark':sysDark;
+  const next=isDark?'light':'dark';
+  localStorage.setItem('painel_theme',next); applyTheme(next);
+}
+
+/* ── helpers ─────────────────────────────────────── */
+const ICONS={
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+  doc:'<path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5M9 13h6M9 17h4"/>',
+  steth:'<path d="M5 3v6a5 5 0 0 0 10 0V3M5 3h2M13 3h2"/><path d="M10 14v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/>',
+  pill:'<rect x="3" y="9.5" width="18" height="5" rx="2.5" transform="rotate(-40 12 12)"/><path d="M9.5 8.5l5 6.5" transform="rotate(-3 12 12)"/>',
+  list:'<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/>',
+  cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  calNext:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/>',
+  loop:'<path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+  shield:'<path d="M12 2l8 3.5V11c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5.5z"/>'
+};
+function icon(n){return `<svg viewBox="0 0 24 24">${ICONS[n]||''}</svg>`;}
+function avatarInitials(nome){return (nome||"?").split(" ").filter(Boolean).slice(0,2).map(s=>s[0]).join("").toUpperCase();}
+function colorFor(nome){let h=0;for(const c of (nome||"")) h=(h*31+c.charCodeAt(0))%PALETTE.length;return PALETTE[h];}
+function avatarEl(p,cls){
+  if(p.foto) return `<img class="av ${cls||''}" src="${p.foto}" alt="">`;
+  return `<div class="av ${cls||''}" style="background:${colorFor(p.nome)}">${avatarInitials(p.nome)}</div>`;
+}
+function fmtDateShort(iso){ if(!iso) return "—"; try{const d=new Date(iso);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}catch(e){return iso;} }
+function isDate(s){ return typeof s==='string' && /^\d{4}-\d{2}-\d{2}/.test(s); }
+function diasFaltando(s){ if(!isDate(s)) return null; const d=new Date(s); const now=new Date(); return Math.ceil((d-now)/(1000*60*60*24)); }
+function saudacao(){const h=new Date().getHours(); return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';}
+
+function statusPill(v){
+  if(v===true||v==='alcancada') return `<span class="pill p-ok">alcançada</span>`;
+  if(v==='vencida') return `<span class="pill p-late">vencida</span>`;
+  if(v==='em_andamento') return `<span class="pill p-wait">em andamento</span>`;
+  if(v===false) return `<span class="pill p-tbd">pendente</span>`;
+  return `<span class="pill p-tbd">a confirmar</span>`;
+}
+function termoPill(v){ if(v===true) return `<span class="pill p-ok">aceito</span>`; if(v===false) return `<span class="pill p-tbd">pendente</span>`; return `<span class="pill p-tbd">a confirmar</span>`; }
+function val(v){ if(v===null||v===undefined||v==="") return `<span class="tbd">a confirmar</span>`; if(typeof v==='string' && v.toLowerCase().includes('a confirmar')) return `<span class="tbd">${v}</span>`; return v; }
+
+async function fetchData(){
+  try{
+    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store',headers:{'X-Panel-Token':sessionStorage.getItem('painel_token')||''}});
+    if(!r.ok) throw 0;
+    const d=await r.json();
+    STATE.patients=d.pacientes||[]; STATE.loaded=true; STATE.demo=false; render();
+  }catch(e){
+    // fallback: dados de exemplo embutidos (modo demo, pra iterar o visual sem backend)
+    STATE.patients=(SAMPLE_DATA&&SAMPLE_DATA.pacientes)||[]; STATE.loaded=true; STATE.demo=true; render();
+  }
+}
+
+function render(){
+  const view=document.getElementById('view');
+  const ativas=STATE.patients.filter(p=>p.ativa).length;
+  document.getElementById('count').textContent=`${ativas} ativas · ${STATE.patients.length} total`;
+  const ll=document.getElementById('livelbl'); if(ll) ll.textContent=STATE.demo?'modo demo':'ao vivo';
+  const lc=document.getElementById('livechip'); if(lc) lc.classList.toggle('demo',STATE.demo);
+  if(STATE.sel){ const p=STATE.patients.find(x=>x.telefone===STATE.sel); if(p){view.innerHTML=detailHTML(p);scrollWA();const cur=(p.ciclos||[]).find(c=>c.atual)||(p.ciclos||[])[0];if(cur)showCyc(p.telefone,cur.numero);return;} }
+  const q=(document.getElementById('search').value||"").toLowerCase();
+  const list=STATE.patients.filter(p=>(p.nome||"").toLowerCase().includes(q));
+  view.innerHTML=`
+    <div class="hero">
+      <img class="joana-ph" src="${JOANA_FOTO}" alt="Joana">
+      <h1 class="serif">${saudacao()}, Dra. Isabelle</h1>
+      <div class="sub">${ativas} paciente${ativas===1?'':'s'} em conversa ativa com a Joana neste momento</div>
+      <div class="lgpd">${icon('shield')} Dados clínicos confidenciais — uso restrito, LGPD</div>
+    </div>
+    ${(()=>{const late=STATE.patients.filter(p=>engInfo(p).level==='late').length;return late?`<div class="homebanner">${icon('shield')} ${late} paciente${late===1?'':'s'} sem resposta recente — vale um alô seu, ou é só pedir pra Joana insistir.</div>`:'';})()}
+    <div class="grid">${list.map(cardHTML).join("")||'<p class="empty">Nenhuma paciente encontrada.</p>'}</div>`;
+}
+
+function lastPacienteTs(p){ const a=(p.mensagens||[]).filter(x=>x.de==='paciente'); return a.length?a[a.length-1].ts:null; }
+function daysSinceTs(ts){ if(!ts) return null; return Math.floor((Date.now()-new Date(ts).getTime())/86400000); }
+function engInfo(p){
+  const d=daysSinceTs(lastPacienteTs(p));
+  if(d===null) return {level:'late',label:'sem resposta ainda'};
+  if(d<=3) return {level:'ok',label: d<=0?'respondeu hoje':'em dia'};
+  if(d<=7) return {level:'warn',label:`${d} dias sem responder`};
+  return {level:'late',label:`${d} dias sem responder`};
+}
+function waLink(p){ return 'https://wa.me/'+((p.telefone||'')+'').replace(/\D/g,''); }
+function fmtDataBR(s){ if(!isDate(s)) return s; const p=s.slice(0,10).split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function engRow(p,withCta){
+  const e=engInfo(p);
+  const cta = (withCta||e.level!=='ok') ? `<a class="wacta" href="${waLink(p)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Dar um alô no WhatsApp</a>` : '';
+  return `<div class="engrow"><span class="epill ${e.level}">${e.label}</span>${cta}</div>`;
+}
+
+function cardHTML(p){
+  const n=(p.mensagens||[]).length;
+  return `<div class="pcard" onclick="open_('${p.telefone}')" role="button" tabindex="0"
+       onkeydown="if(event.key==='Enter')open_('${p.telefone}')">
+    <div class="top">
+      ${avatarEl(p)}
+      <div>
+        <div class="nm">${p.nome}</div>
+        <div class="sub">última: ${fmtDateShort(p.ultimaInteracao)}</div>
+      </div>
+    </div>
+    <div class="ft">
+      <span class="st ${p.ativa?'on':''}"><i></i>${p.ativa?'Ativa':'Inativa'}</span>
+      <span class="mcount">${n} mensage${n===1?'m':'ns'}</span>
+    </div>
+    ${engRow(p,false)}
+  </div>`;
+}
+
+function detailHTML(p){
+  const m=p.marcos||{};
+  const msgs=(p.mensagens||[]).map(x=>`
+    <div class="msg ${x.de==='joana'?'m-joana':'m-pac'}">${escapeHtml(x.texto)}<span class="m-time">${x.hora||''}</span></div>`).join("")
+    || '<div class="wa-empty">Sem conversa ainda. A paciente não respondeu.</div>';
+  const cycles=(p.ciclos||[]).map(c=>`<span class="cyc ${c.atual?'cur':(c.meta&&c.meta.status==='alcancada'?'done':'')}" id="cyc-${c.numero}" role="button" tabindex="0" onclick="showCyc('${p.telefone}',${c.numero})" onkeydown="if(event.key==='Enter')showCyc('${p.telefone}',${c.numero})">Ciclo ${c.numero}${c.meta&&c.meta.status==='alcancada'?' ✓':''}${c.atual?' · atual':''}</span>`).join("");
+  const metaDias=m.metaRetorno?diasFaltando(m.metaRetorno.data):null;
+  const metaLinha = m.metaRetorno ? (
+     isDate(m.metaRetorno.data)
+       ? `<div class="big">${fmtDataBR(m.metaRetorno.data)}</div><div class="when">${metaDias>=0?`faltam ${metaDias} dias`:`vencida há ${-metaDias} dias`}</div>`
+       : `<div class="vl">${val(m.metaRetorno.data)}</div>`
+   ) : `<div class="vl"><span class="tbd">a confirmar</span></div>`;
+
+  return `<button class="back" onclick="open_(null)">‹ Voltar às pacientes</button>
+  <div class="detail">
+    <div class="panel">
+      <div class="pnhead">${avatarEl(p)}<div>
+        <div class="nm">${p.nome}</div>
+        <div class="cycles">${cycles||''}</div>
+      </div></div>
+      ${p.ciclos&&p.ciclos.length?'<div class="cycmeta" id="cycmeta"></div>':''}
+      ${engRow(p,true)}
+
+      <div class="mcard meta">
+        <div class="lb">${icon('target')} Meta · retorno em 30 dias ${m.metaRetorno?statusPill(m.metaRetorno.status):''}</div>
+        ${metaLinha}
+      </div>
+
+      <div class="mcard"><div class="lb">${icon('doc')} Termo LGPD ${m.termoLGPD?termoPill(m.termoLGPD.aceito):''}</div><div class="vl">${m.termoLGPD&&m.termoLGPD.data?('aceito em '+fmtDataBR(m.termoLGPD.data)):val(m.termoLGPD?m.termoLGPD.aceito===true?'aceito':'a confirmar':null)}</div></div>
+      <div class="mcard"><div class="lb">${icon('steth')} Diagnóstico</div><div class="vl">${val(m.diagnostico)}</div></div>
+      <div class="mcard"><div class="lb">${icon('pill')} Tratamento</div><div class="vl">${val(m.tratamento)}</div></div>
+      <div class="mcard"><div class="lb">${icon('list')} Medicamentos</div>${(m.medicamentos&&m.medicamentos.length)?`<ul class="meds">${m.medicamentos.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<div class="vl">${val(null)}</div>`}</div>
+      <div class="mcard"><div class="lb">${icon('cal')} Última consulta</div><div class="vl">${val(m.ultimaConsulta)}</div></div>
+      <div class="mcard"><div class="lb">${icon('calNext')} Próxima consulta</div><div class="vl">${val(m.proximaConsulta)}</div></div>
+      <div class="mcard"><div class="lb">${icon('loop')} Check-ins</div><div class="vl">${val(m.checkins)}</div></div>
+    </div>
+
+    <div class="phone"><div class="wa">
+      <div class="wa-hd">${avatarEl(p)}<div><div class="nm">${p.nome}</div><div class="stt">${p.ativa?'conversa ativa':'sem resposta ainda'}</div></div></div>
+      <div class="wa-body" id="wabody">${msgs}</div>
+    </div></div>
+  </div>`;
+}
+
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function open_(tel){STATE.sel=tel;render();window.scrollTo(0,0);}
+function showCyc(tel,num){
+  const p=(STATE.patients||[]).find(x=>x.telefone===tel); if(!p)return;
+  const c=(p.ciclos||[]).find(y=>y.numero===num); const el=document.getElementById('cycmeta'); if(!c||!el)return;
+  const meta=c.meta||{};
+  el.innerHTML=`<div class="ct">Ciclo ${c.numero}${c.atual?' · atual':''} ${meta.status?statusPill(meta.status):''}</div>
+    <div class="cd">${escapeHtml(c.tratamento||'')}</div>
+    <div class="cd" style="margin-top:6px">${escapeHtml(meta.descricao||'')}</div>`;
+  document.querySelectorAll('.cyc').forEach(x=>x.classList.remove('sel'));
+  const b=document.getElementById('cyc-'+num); if(b)b.classList.add('sel');
+}
+function scrollWA(){const b=document.getElementById('wabody');if(b)b.scrollTop=b.scrollHeight;}
+
+// login simples
+async function tryLogin(){
+  const v=document.getElementById('pw').value.trim();
+  try{
+    const r=await fetch(API_BASE+'/api/patients',{cache:'no-store',headers:{'X-Panel-Token':v}});
+    if(r.ok){ sessionStorage.setItem('painel_token',v); showApp(); }
+    else document.getElementById('gerr').textContent='Senha incorreta. Tente novamente.';
+  }catch(e){ document.getElementById('gerr').textContent='Erro de conexão. Tente de novo.'; }
+}
+function showApp(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';fetchData();setInterval(fetchData,15000);}
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin();});
+applyTheme(localStorage.getItem('painel_theme'));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>applyTheme(localStorage.getItem('painel_theme')));
+if(sessionStorage.getItem('painel_token')){showApp();}
+</script>
+</body>
+</html>

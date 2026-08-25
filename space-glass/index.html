@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Entropia Cultural · Space Glass</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F4F5F7;color:#1a1d21}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 20px 70px}
+header.top{background:#15181C;color:#fff;padding:30px 20px 26px;margin:-26px -20px 24px}
+header.top .in{max-width:1180px;margin:0 auto}
+h1{font-size:25px;font-weight:700;letter-spacing:-.4px}
+.sub{color:#9aa3ad;font-size:13.5px;margin-top:6px}
+.barra{display:flex;height:11px;border-radius:6px;overflow:hidden;margin:20px 0 9px}
+.seg{height:100%}
+.legenda{color:#8b949e;font-size:12px}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0 22px}
+.chip{border:1.5px solid #d8dce1;background:#fff;border-radius:22px;padding:8px 15px;font-size:13px;cursor:pointer;
+ display:flex;align-items:center;gap:7px;font-family:inherit;transition:.15s;color:#3d444d}
+.chip:hover{border-color:var(--c)}
+.chip.on{border-color:var(--c);background:var(--c);color:#fff}
+.chip.on .dot{background:#fff!important}
+.chip b{font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%}
+.card{background:#fff;border-radius:11px;margin-bottom:15px;box-shadow:0 1px 3px rgba(0,0,0,.09);overflow:hidden}
+.card header{padding:15px 19px 13px;position:relative}
+.meta{display:flex;gap:9px;align-items:center;margin-bottom:5px}
+.bloco{font-size:10.5px;font-weight:700;letter-spacing:.9px;color:#8b949e;text-transform:uppercase}
+.hip{font-size:10.5px;color:#b0b7bf;background:#f0f2f4;padding:1px 7px;border-radius:4px}
+.card h3{font-size:17px;font-weight:650;padding-right:120px}
+.tag{position:absolute;top:15px;right:19px;color:#fff;font-size:10.5px;font-weight:700;
+ letter-spacing:.6px;padding:4px 11px;border-radius:20px}
+.falas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#e8ebee}
+.fala{background:#fff;padding:15px 19px}
+.quem{font-size:11px;font-weight:700;letter-spacing:.8px;color:#5a6570;margin-bottom:7px}
+.quem small{display:block;font-weight:400;letter-spacing:0;color:#a5adb6;font-size:10.5px;margin-top:1px}
+.fala p{font-size:13.5px;color:#333941;line-height:1.62}
+.leitura{padding:13px 19px;font-size:13.5px}
+.vazio{text-align:center;color:#8b949e;padding:46px;font-size:14px}
+@media(max-width:720px){.falas{grid-template-columns:1fr} .card h3{padding-right:0;margin-top:8px} .tag{position:static;display:inline-block}}
+</style></head><body>
+<header class="top"><div class="in">
+ <h1>Entropia Cultural · Space Glass</h1>
+ <div class="sub">Onde a cultura desejada pelo dono encontra a cultura praticada &nbsp;·&nbsp; 23 temas &nbsp;·&nbsp; 2 de 6 entrevistas</div>
+ <div class="barra"><div class="seg" style="width:21.7%;background:#C0392B" title="DIVERGE: 5"></div><div class="seg" style="width:26.1%;background:#1F6FB2" title="PONTO CEGO: 6"></div><div class="seg" style="width:26.1%;background:#B8860B" title="PARCIAL: 6"></div><div class="seg" style="width:26.1%;background:#1B8A5A" title="CONVERGE: 6"></div></div>
+ <div class="legenda">Entropia é a distância entre o que o dono deseja e o que se pratica. Ela não aparece na fala de um: aparece no atrito entre duas.</div>
+</div></header>
+<div class="wrap">
+ <div class="chips"><button class="chip" data-f="VERMELHO" style="--c:#C0392B"><span class="dot" style="background:#C0392B"></span>DIVERGE <b>5</b></button><button class="chip" data-f="AZUL" style="--c:#1F6FB2"><span class="dot" style="background:#1F6FB2"></span>PONTO CEGO <b>6</b></button><button class="chip" data-f="AMARELO" style="--c:#B8860B"><span class="dot" style="background:#B8860B"></span>PARCIAL <b>6</b></button><button class="chip" data-f="VERDE" style="--c:#1B8A5A"><span class="dot" style="background:#1B8A5A"></span>CONVERGE <b>6</b></button><button class="chip" data-f="TODOS" style="--c:#5a6570"><span class="dot" style="background:#5a6570"></span>Todos <b>23</b></button></div>
+ <div id="lista">
+<article class="card" data-farol="VERMELHO" data-bloco="DECISÃO E PODER">
+  <header style="border-left:6px solid #C0392B">
+    <div class="meta"><span class="bloco">DECISÃO E PODER</span><span class="hip">H1</span></div>
+    <h3>Autonomia: quem decide o quê</h3>
+    <span class="tag" style="background:#C0392B">DIVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Eu dou bastante autonomia.&quot; / &quot;Eu sou bom assim para delegar.&quot; / &quot;Isso não impacta na velocidade não, porque eles conseguem me acessar.&quot; MAS admite: &quot;Eles sabem, mas não tá claro&quot; e &quot;tenho essa sensação&quot; de que a pergunta não precisava chegar nele.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Ele faz as pessoas depender dele.&quot; / &quot;As pessoas aqui precisam muito da validação dele. Não que elas não saibam. Ah, vou perguntar só para ter a certeza.&quot; / &quot;Ele gosta de saber de tudo.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#FDECEA;border-left:4px solid #C0392B"><b>Leitura:</b> ENTROPIA ALTA. Ele acredita que delega; ela diz que ele CRIA dependência. Não é ruído de percepção, é o coração do problema.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="DECISÃO E PODER">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">DECISÃO E PODER</span><span class="hip">H1</span></div>
+    <h3>O que acontece quando alguém decide diferente</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não abordou. Descreve o próprio processo como &quot;fecha a decisão em dois&quot;.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Se não for tipo o que ele espera... ele não é que ele briga, mas ele fica meio bravo.&quot; Caso das jaquetas: ela decidiu contra a vontade dele e manteve.</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> PONTO CEGO. Ele não enxerga o custo emocional de discordar dele. Ela nomeia o mecanismo que trava a autonomia.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="DECISÃO E PODER">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">DECISÃO E PODER</span><span class="hip">H1</span></div>
+    <h3>Nível de detalhe que sobe até ele</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Decisão que envolve mudança, envolve custo, envolve uma informação que tem que circular, eles demandam a mim.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Os treinamentos, ele fica muito no pé disso. Ele quer ser avisado se não teve e por quê. É uma coisa relativamente pequena, mas ele quer ser avisado.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Convergem no fato. Ela mostra que a régua desceu mais do que ele descreve: chega ao operacional miúdo.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="RITMO E PRIORIDADE">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">RITMO E PRIORIDADE</span><span class="hip">H2</span></div>
+    <h3>Velocidade como identidade</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;A regra é a imediatilidade.&quot; / &quot;É tudo muito urgente. Não é que é urgente, é muito rápido mesmo.&quot; / &quot;Essa velocidade de se adaptar é um valor bastante importante para mim.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Rápido. As coisas aqui acontecem muito rápido.&quot; / &quot;Isso também do meu pai, que é assim: é para ontem.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA TOTAL. É o traço cultural mais forte e mais consciente dos dois lados. Ativo a preservar e nomear.</div>
+</article>
+<article class="card" data-farol="VERMELHO" data-bloco="RITMO E PRIORIDADE">
+  <header style="border-left:6px solid #C0392B">
+    <div class="meta"><span class="bloco">RITMO E PRIORIDADE</span><span class="hip">H2</span></div>
+    <h3>O custo da velocidade</h3>
+    <span class="tag" style="background:#C0392B">DIVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Lê a lentidão do outro como falha pessoal: &quot;é procrastinação&quot;. Só admite a dúvida uma vez: &quot;pode ser que na minha cabeça já vire procrastinação&quot;.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Tá todo mundo muito com muita coisa para fazer e sem tempo mesmo de pensar estrategicamente. Tá todo mundo fazendo muito dia a dia e não pensando no futuro.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#FDECEA;border-left:4px solid #C0392B"><b>Leitura:</b> ENTROPIA ALTA. Ele vê procrastinação individual; ela vê sobrecarga estrutural. Mesmo sintoma, diagnósticos opostos, tratamentos opostos.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="LIDERANÇA">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">LIDERANÇA</span><span class="hip">H3</span></div>
+    <h3>Gerentes não formam equipe</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;De maneira geral, os meus liderados eles são ruim de equipes.&quot; / &quot;Preferem eles mesmos fazer.&quot; / Hipótese dele: &quot;pode ser por essa cobrança: não posso errar&quot;.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>Sobre quem NÃO entrega: &quot;de pegar muito o guarda-chuva, não deixar as pessoas terem autonomia&quot;. Sobre uma das melhores: &quot;tá muita coisa concentrada nele, muita&quot;.</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA TOTAL, e é o teto de crescimento da empresa. Os dois descrevem o mesmo padrão sem terem combinado.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="LIDERANÇA">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">LIDERANÇA</span><span class="hip">H11</span></div>
+    <h3>Liderança na fábrica</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não abordou. Menciona a fábrica 2 vezes na conversa inteira (contra 15 do comercial).</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Acho que o nosso maior problema hoje é na fábrica.&quot; / As saídas foram &quot;por liderança... elas não gostavam do chefe&quot;. / &quot;Uma delas é até líder e todo mundo odeia ele... é grossa, só é a dona da razão. Competente tecnicamente, mas acaba se estragando porque não sabe lidar com pessoa.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> PONTO CEGO GRAVE. O maior problema declarado pela filha nem aparece na fala do dono. Prioridade máxima nas próximas entrevistas.</div>
+</article>
+<article class="card" data-farol="VERMELHO" data-bloco="CONSEQUÊNCIA">
+  <header style="border-left:6px solid #C0392B">
+    <div class="meta"><span class="bloco">CONSEQUÊNCIA</span><span class="hip">H4</span></div>
+    <h3>Existe consequência para quem não entrega?</h3>
+    <span class="tag" style="background:#C0392B">DIVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Somos ruins para fazer demissão.&quot; / &quot;A gente não demite. A gente começa a apertar um pouquinho e a pessoa mesma se exclui.&quot; / &quot;Aquele senso da impunidade é ruim para nós: um funcionário impune contamina o que cumpre as regras.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;A gente tem muito esse negócio do feedback... eles recebem feedback e se não tá fluindo é desligado.&quot; / &quot;É muito pela meritocracia. Se eles não entregam, não recebem.&quot; / Cesta básica só para quem não atrasa; bonificação por meta de quebra.</p></div>
+  </div>
+  <div class="leitura" style="background:#FDECEA;border-left:4px solid #C0392B"><b>Leitura:</b> ENTROPIA ALTA e reveladora. Ele vê ausência de consequência; ela vê um sistema funcionando. Ou o sistema existe e ele não confia nele, ou ele existe no papel e não na prática.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="CONTROLE E CONFIANÇA">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">CONTROLE E CONFIANÇA</span><span class="hip">H5</span></div>
+    <h3>Rigor sobre recursos</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Eu nunca comprei uma caneta. Tenho uma cultura do não desperdício.&quot; / &quot;A gente sabe quantas rodas o pneu deu em cada caminhão.&quot; / Não economiza em segurança, imagem e qualidade.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Tudo aqui é muito regulado, da caneta ao papel. A gente conta quantos papéis foram impressos no mês.&quot; / &quot;Não é ser pão duro, é um controle mesmo... tudo tem um porquê.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA no fato e na interpretação positiva. Os dois leem como cuidado, não como mesquinhez.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="CONTROLE E CONFIANÇA">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">CONTROLE E CONFIANÇA</span><span class="hip">H5</span></div>
+    <h3>Rigidez: até onde o controle vira peso</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não vê tensão aqui. O controle é virtude e ferramenta de decisão.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>Sobre a tia: &quot;ela controlava um clipe. Ter controle é bom, mas essa coisa engessada é o que a gente não quer.&quot; / &quot;Tem que ter controle, mas tudo muito rígido também não é leve, não é gostoso. As pessoas às vezes tão vindo, não querendo estar aqui.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Mesma prática, valores diferentes. Ela quer leveza; ele não vê o tema. Tensão a resolver na definição dos valores.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="CONTROLE E CONFIANÇA">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">CONTROLE E CONFIANÇA</span><span class="hip">H5</span></div>
+    <h3>As pessoas admitem erro?</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Confiança é nominal, não sistêmica: &quot;Ah, foi a Cleide? Então fico tranquilo. Foi a Adriana? Então fico tranquilo.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Todo mundo é muito aberto: eu errei, levanta a mão, errei. Principalmente aqui no escritório.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Ela vê abertura no escritório. Ele confia em nomes, não em processos. Testar na fábrica, onde ela mesma diz que ninguém contraria.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="VOZ E DISCORDÂNCIA">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">VOZ E DISCORDÂNCIA</span><span class="hip">H1</span></div>
+    <h3>Dá para discordar do dono?</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Valoriza quem resolve. Não fala sobre receber discordância.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>As três melhores pessoas &quot;batem um pouco de frente com o meu pai&quot;. / &quot;Ele fica bravo, ele bate de frente também, quer que todo mundo escute o ponto dele, mas ele acata muito as ideias.&quot; / MAS na fábrica: &quot;o pessoal tem um certo medo dele e acata qualquer decisão... não discute, não contraria&quot;.</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> ACHADO FORTE. Quem discorda é quem ele mais admira, e ele não sabe disso. E existe uma fronteira: no escritório se discorda, na fábrica não.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="RECONHECIMENTO">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">RECONHECIMENTO</span><span class="hip">H8</span></div>
+    <h3>Rituais de celebração</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Citou espontaneamente um só: &quot;Acabei de vir de um almoço comemorativo com a equipe comercial dos que bateram a meta.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>Confirma o almoço do comercial, acrescenta a campanha de quebras na fábrica e a cesta básica. E aponta o vazio: &quot;eles não têm nenhum ritual no financeiro&quot;. Quer criar um.</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Ela enxerga o mapa completo e o buraco; ele lembra só do comercial, que é a área dele. Confirma a hierarquia informal de prestígio.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="RECONHECIMENTO">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">RECONHECIMENTO</span><span class="hip">H8</span></div>
+    <h3>Benefícios como alavanca</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não abordou.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Meu pai é pouco para trás com isso... ele não entende o quanto isso impacta no engajamento ou na hora de contratar.&quot; / &quot;Outro dia a gente perdeu um funcionário porque no outro ele ia ter um plano que cobria odontologia, e não era nem por causa do salário.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> PONTO CEGO com custo já materializado: perderam gente por benefício, não por salário.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="REGRAS">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">REGRAS</span><span class="hip">H7</span></div>
+    <h3>Existe institucional escrito?</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Falta um profissionalismo na Space Glass... a regra é essa, a política é essa. Então tá tudo muito perdidinho.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>Caso das jaquetas: &quot;não tinha uma regra, porque também não foi uma situação esperada. A gente não comunicou isso a ninguém.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA. Ele nomeia a ausência; ela vive o efeito. O caso das jaquetas é a ilustração perfeita para o diagnóstico.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="ENTRADA E PERMANÊNCIA">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">ENTRADA E PERMANÊNCIA</span><span class="hip">H6</span></div>
+    <h3>O que se exige de quem chega</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Para trabalhar na Space Glass tem que ser guerreiro.&quot; / &quot;O que vai determinar é a sua resiliência.&quot; / Admite: &quot;é parte da cultura que eu não sei te transmitir o que que é&quot;.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Tem que gostar muito de trabalho, que não dá para fazer reloginho aqui. A pessoa: ah, fiz minhas coisas, acabou, vai embora. Aqui não funciona.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA. Os dois descrevem o mesmo filtro, e nenhum dos dois consegue transformá-lo em critério comunicável.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="FUTURO">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">FUTURO</span><span class="hip">H9</span></div>
+    <h3>Para onde a empresa vai</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Crescer com sustentabilidade, não em volume. Virar premium e ser reconhecido pelo mercado. Automatizar precificação e atendimento de commodity com IA.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Agora a gente não tá pensando em expandir mercado. É arrumar a casa.&quot; / Vê espaço em ampliar gama de produto e vender ao cliente final, porque &quot;a fábrica tá vendendo pro nosso cliente também&quot;.</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Convergem em arrumar a casa antes de crescer. Divergem no vetor: ele mira preço premium; ela mira gama de produto e novo canal.</div>
+</article>
+<article class="card" data-farol="AMARELO" data-bloco="FUTURO">
+  <header style="border-left:6px solid #B8860B">
+    <div class="meta"><span class="bloco">FUTURO</span><span class="hip">H9</span></div>
+    <h3>IA e automação: a leitura da base</h3>
+    <span class="tag" style="background:#B8860B">PARCIAL</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Entusiasmado. Relata a reação da ponta ao medir eficiência: &quot;a primeira coisa é: já vão fazer alguma coisa para eu perder meu emprego&quot;.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Não se opõem, mas fica um pouco: ai, tá longe, vai demorar. Não é por agora. E já acontece.&quot; / No administrativo o uso de IA é &quot;muito pouco, muito pouco&quot;.</p></div>
+  </div>
+  <div class="leitura" style="background:#FFF8E1;border-left:4px solid #B8860B"><b>Leitura:</b> Ele vê medo; ela vê distância. Nenhum dos dois vê adoção. A visão de futuro é do dono e não desceu.</div>
+</article>
+<article class="card" data-farol="VERMELHO" data-bloco="VALORES">
+  <header style="border-left:6px solid #C0392B">
+    <div class="meta"><span class="bloco">VALORES</span><span class="hip">H10</span></div>
+    <h3>Os valores oficiais estão vivos?</h3>
+    <span class="tag" style="background:#C0392B">DIVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>NÃO citou o anagrama Sonho, Perseverança, Ação, Coragem, Entusiasmo uma única vez em 1h13.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>Perguntada pelas três palavras que descrevem o jeito de trabalhar: &quot;rápido&quot;, &quot;energia ou força&quot;, &quot;determinação para fazer acontecer&quot;. Nenhuma do anagrama.</p></div>
+  </div>
+  <div class="leitura" style="background:#FDECEA;border-left:4px solid #C0392B"><b>Leitura:</b> CONFIRMADO EM DOBRO. Os valores declarados não vivem no vocabulário de ninguém, nem do fundador nem da filha. A cultura real usa outras palavras, e são essas que devem virar os valores novos.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="ATRITO ENTRE ÁREAS">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">ATRITO ENTRE ÁREAS</span><span class="hip">H11</span></div>
+    <h3>Onde estão os conflitos</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não desenvolveu. A hipótese original mirava comercial x fábrica.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Financeiro e comercial, porque o financeiro que tem que liberar o valor de compra... às vezes o comercial fica um pouco bravo mesmo.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> A hipótese estava no alvo errado. O atrito é FINANCEIRO x COMERCIAL. Corrigir o roteiro das próximas entrevistas.</div>
+</article>
+<article class="card" data-farol="VERDE" data-bloco="SUCESSÃO">
+  <header style="border-left:6px solid #1B8A5A">
+    <div class="meta"><span class="bloco">SUCESSÃO</span><span class="hip">H12</span></div>
+    <h3>O que se espera da Bele</h3>
+    <span class="tag" style="background:#1B8A5A">CONVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>&quot;Ela gostaria de empreender... ela se sente um pouco cobrada e eu não cobro. Eu não cobro, mas eu sei que ela sente isso internamente.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Eu sempre soube que meu pai já fixou que eu ia vir para cá.&quot; / &quot;Esse negócio é meu, já tá pronto, eu preciso aprender 100% disso.&quot; / &quot;Ele quer que eu traga coisas novas.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E7F5EC;border-left:4px solid #1B8A5A"><b>Leitura:</b> CONVERGÊNCIA. Ele não cobra em voz alta; ela já assumiu como dado. A cobrança não dita foi absorvida sem atrito aparente.</div>
+</article>
+<article class="card" data-farol="VERMELHO" data-bloco="SUCESSÃO">
+  <header style="border-left:6px solid #C0392B">
+    <div class="meta"><span class="bloco">SUCESSÃO</span><span class="hip">H12</span></div>
+    <h3>O modelo de empresa que cada um quer</h3>
+    <span class="tag" style="background:#C0392B">DIVERGE</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Presença total. &quot;Eu prefiro saber, eu quero saber.&quot; Power BI que &quot;me fala tudo&quot;. Insônia. &quot;Trabalho com a mesma vontade do primeiro dia.&quot;</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Não quero ter uma rotina igual a dele, porque quero ter as minhas coisas também. Quero achar um jeito aqui que ande sozinho.&quot; / Quer empreender em moda.</p></div>
+  </div>
+  <div class="leitura" style="background:#FDECEA;border-left:4px solid #C0392B"><b>Leitura:</b> ENTROPIA ESTRUTURAL. O modelo dele (dono presente em tudo) é incompatível com o que ela quer herdar (empresa que anda sozinha). Isso define o desenho do futuro, não só a cultura.</div>
+</article>
+<article class="card" data-farol="AZUL" data-bloco="CLIMA">
+  <header style="border-left:6px solid #1F6FB2">
+    <div class="meta"><span class="bloco">CLIMA</span><span class="hip">novo</span></div>
+    <h3>O clima mudou?</h3>
+    <span class="tag" style="background:#1F6FB2">PONTO CEGO</span>
+  </header>
+  <div class="falas">
+    <div class="fala"><div class="quem">FABIO<small>fundador · 24/08</small></div><p>Não abordou o clima diretamente. Fala da &quot;retomada&quot; pós-fraude e de arrumar a casa.</p></div>
+    <div class="fala"><div class="quem">BELE<small>filha, 1 ano de casa · 25/08</small></div><p>&quot;Quando eu cheguei há um ano, as coisas estavam muito piores em relação ao clima. Tava uma coisa pesada... agora começou a melhorar.&quot; / O que mudou: ela começou a falar com o pai. Exemplo: a festa de 20 anos, que ele não queria fazer. &quot;Eles amaram e mudou o clima.&quot;</p></div>
+  </div>
+  <div class="leitura" style="background:#E8F1FA;border-left:4px solid #1F6FB2"><b>Leitura:</b> TEMA NOVO, trazido só por ela. Prova que a filha move o fundador, e que gesto simbólico teve efeito real no engajamento.</div>
+</article></div>
+ <div class="vazio" id="vazio" style="display:none">Nenhum tema neste filtro.</div>
+</div>
+<script>
+const chips=[...document.querySelectorAll('.chip')],cards=[...document.querySelectorAll('.card')];
+function filtra(f){
+  chips.forEach(c=>c.classList.toggle('on',c.dataset.f===f));
+  let n=0;
+  cards.forEach(c=>{const ok=(f==='TODOS'||c.dataset.farol===f);c.style.display=ok?'':'none';if(ok)n++});
+  document.getElementById('vazio').style.display=n?'none':'';
+}
+chips.forEach(c=>c.onclick=()=>filtra(c.dataset.f));
+filtra('TODOS');
+</script></body></html>
